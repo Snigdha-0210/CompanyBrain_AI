@@ -174,7 +174,7 @@ export default function StrategyPage() {
                               <CartesianGrid vertical={false} strokeDasharray="3 3" opacity={0.5} />
                               <Tooltip 
                                 contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} 
-                                formatter={(value: any) => [\`\${value}\`, "Value"]}
+                                formatter={(value: any) => [`${value}`, "Value"]}
                               />
                               <Area type="monotone" dataKey="value" stroke="#2563eb" strokeWidth={3} fillOpacity={1} fill={`url(#colorValue${rec.id})`} />
                             </AreaChart>

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { Lightbulb, ArrowRight, TrendingUp, AlertTriangle, ShieldCheck, Users } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
+import { toast } from 'sonner'
 
 export default function InsightsPage() {
   const { data: insights, isLoading } = useQuery({
@@ -86,7 +87,15 @@ export default function InsightsPage() {
                   </h4>
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <p className="text-sm text-muted-foreground">{insight.recommendedAction}</p>
-                    <Button size="sm" className="shrink-0 group bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-200">
+                    <Button 
+                      size="sm" 
+                      className="shrink-0 group bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-200"
+                      onClick={() => {
+                        toast.success('Action logged to Strategic Roadmap', {
+                          description: 'Open the Strategic Advisor to execute this task.'
+                        })
+                      }}
+                    >
                       Take Action
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Button>

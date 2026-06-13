@@ -9,17 +9,20 @@ import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
+import { useStore } from '@/lib/store'
 
 export default function StrategyPage() {
   const [question, setQuestion] = useState('What should leadership focus on next quarter?')
   const [recommendations, setRecommendations] = useState<any[]>([])
   const [expandedId, setExpandedId] = useState<string | null>(null)
+  
+  const selectedDocuments = useStore(state => state.selectedDocuments);
 
   const strategyMutation = useMutation({
     mutationFn: async (q: string) => {
       const res = await fetch('/api/strategy', {
         method: 'POST',
-        body: JSON.stringify({ question: q }),
+        body: JSON.stringify({ question: q, selectedDocs: selectedDocuments }),
         headers: { 'Content-Type': 'application/json' }
       })
       if (!res.ok) throw new Error('Failed to generate strategy')

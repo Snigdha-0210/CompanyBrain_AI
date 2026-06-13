@@ -6,7 +6,7 @@ import { getMarketResearch } from '@/lib/ai/marketResearch'
 
 export async function POST(req: NextRequest) {
   try {
-    const { question } = await req.json()
+    const { question, selectedDocs = [] } = await req.json()
     if (!question) return NextResponse.json({ error: 'Question required' }, { status: 400 })
 
     const store = await getVectorStore()
@@ -15,7 +15,14 @@ export async function POST(req: NextRequest) {
     let docs: any[] = [];
     try {
       if (store.index && store.index.getCurrentCount() > 0) {
-        docs = await store.similaritySearch(question, 5)
+        // Fetch more docs to allow for filtering
+        const rawDocs = await store.similaritySearch(question, 50)
+        
+        if (selectedDocs && selectedDocs.length > 0) {
+          docs = rawDocs.filter(d => selectedDocs.includes(d.metadata.source)).slice(0, 5)
+        } else {
+          docs = rawDocs.slice(0, 5)
+        }
       }
     } catch (e) {
       console.warn("Skipping similarity search (empty store)", e)

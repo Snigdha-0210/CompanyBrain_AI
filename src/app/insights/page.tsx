@@ -7,13 +7,20 @@ import { Progress } from '@/components/ui/progress'
 import { Lightbulb, ArrowRight, TrendingUp, AlertTriangle, ShieldCheck, Users } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+import { useStore } from '@/lib/store'
 
 export default function InsightsPage() {
   const router = useRouter();
+  const selectedDocuments = useStore(state => state.selectedDocuments);
+  
   const { data: insights, isLoading } = useQuery({
-    queryKey: ['insights'],
+    queryKey: ['insights', selectedDocuments],
     queryFn: async () => {
-      const res = await fetch('/api/insights')
+      const queryParams = new URLSearchParams()
+      if (selectedDocuments.length > 0) {
+        queryParams.append('docs', selectedDocuments.join(','))
+      }
+      const res = await fetch(`/api/insights?${queryParams.toString()}`)
       if (!res.ok) throw new Error('Failed to fetch insights')
       return res.json()
     }

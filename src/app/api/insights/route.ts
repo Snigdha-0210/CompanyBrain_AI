@@ -3,15 +3,26 @@ import { getVectorStore } from '@/lib/ai/vectorStore'
 import { ChatGroq } from '@langchain/groq'
 import { INSIGHTS_SYSTEM_PROMPT } from '@/lib/ai/prompts'
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url)
+    const docsParam = searchParams.get('docs')
+    const selectedDocs = docsParam ? docsParam.split(',') : []
+
     const store = await getVectorStore()
     
     // We use a broad query to gather diverse context for insights
     let docs: any[] = [];
     try {
       if (store.index && store.index.getCurrentCount() > 0) {
-        docs = await store.similaritySearch("revenue growth customers operational updates compliance", 8)
+        // Fetch more docs to allow for filtering
+        const rawDocs = await store.similaritySearch("revenue growth customers operational updates compliance", 50)
+        
+        if (selectedDocs.length > 0) {
+          docs = rawDocs.filter(d => selectedDocs.includes(d.metadata.source)).slice(0, 8)
+        } else {
+          docs = rawDocs.slice(0, 8)
+        }
       }
     } catch (e) {
       console.warn("Skipping similarity search (empty store)", e)

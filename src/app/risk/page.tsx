@@ -5,12 +5,18 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { AlertCircle, TrendingDown, ShieldAlert, ArrowUpRight } from 'lucide-react'
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { Progress } from '@/components/ui/progress'
+import { useStore } from '@/lib/store'
 
 export default function RiskAnalysisPage() {
+  const selectedDocuments = useStore(state => state.selectedDocuments);
   const { data: riskData, isLoading } = useQuery({
-    queryKey: ['risk-analysis'],
+    queryKey: ['risk-analysis', selectedDocuments],
     queryFn: async () => {
-      const res = await fetch('/api/risk-analysis')
+      const queryParams = new URLSearchParams()
+      if (selectedDocuments.length > 0) {
+        queryParams.append('docs', selectedDocuments.join(','))
+      }
+      const res = await fetch(`/api/risk-analysis?${queryParams.toString()}`)
       if (!res.ok) throw new Error('Failed to fetch')
       return res.json()
     }

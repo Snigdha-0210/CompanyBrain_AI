@@ -9,6 +9,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { UploadCloud, File, Trash2, Eye, BrainCircuit, CheckCircle, AlertCircle } from 'lucide-react'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { toast } from 'sonner'
+import { useStore } from '@/lib/store'
+import { Checkbox } from '@/components/ui/checkbox'
 
 interface Document {
   id: string
@@ -21,6 +23,8 @@ interface Document {
 export default function DocumentsPage() {
   const [isDragging, setIsDragging] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
+
+  const { selectedDocuments, toggleDocument, selectAllDocuments, deselectAllDocuments } = useStore()
 
   const { data: documents = [], refetch } = useQuery<Document[]>({
     queryKey: ['documents'],
@@ -151,14 +155,19 @@ export default function DocumentsPage() {
       </Card>
 
       <Card>
-        <CardHeader>
+        <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Document Library</CardTitle>
+          <div className="space-x-2">
+            <Button variant="outline" size="sm" onClick={() => selectAllDocuments(documents.map(d => d.name))}>Select All</Button>
+            <Button variant="outline" size="sm" onClick={deselectAllDocuments}>Deselect All</Button>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="rounded-md border">
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-[50px]"></TableHead>
                   <TableHead>Document Name</TableHead>
                   <TableHead>Type</TableHead>
                   <TableHead>Upload Date</TableHead>
@@ -168,7 +177,13 @@ export default function DocumentsPage() {
               </TableHeader>
               <TableBody>
                 {documents.map((doc) => (
-                  <TableRow key={doc.id}>
+                  <TableRow key={doc.id} className={selectedDocuments.includes(doc.name) ? "bg-muted/50" : ""}>
+                    <TableCell>
+                      <Checkbox 
+                        checked={selectedDocuments.includes(doc.name)} 
+                        onCheckedChange={() => toggleDocument(doc.name)} 
+                      />
+                    </TableCell>
                     <TableCell className="font-medium flex items-center gap-2">
                       <File className="h-4 w-4 text-muted-foreground" />
                       {doc.name}
@@ -200,7 +215,7 @@ export default function DocumentsPage() {
                 ))}
                 {documents.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                       No documents found. Upload one to get started.
                     </TableCell>
                   </TableRow>

@@ -6,9 +6,10 @@ import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { Lightbulb, ArrowRight, TrendingUp, AlertTriangle, ShieldCheck, Users } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
-import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 export default function InsightsPage() {
+  const router = useRouter();
   const { data: insights, isLoading } = useQuery({
     queryKey: ['insights'],
     queryFn: async () => {
@@ -91,9 +92,7 @@ export default function InsightsPage() {
                       size="sm" 
                       className="shrink-0 group bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-200"
                       onClick={() => {
-                        toast.success('Action logged to Strategic Roadmap', {
-                          description: 'Open the Strategic Advisor to execute this task.'
-                        })
+                        router.push(`/strategy?action=${encodeURIComponent(insight.recommendedAction)}`);
                       }}
                     >
                       Take Action

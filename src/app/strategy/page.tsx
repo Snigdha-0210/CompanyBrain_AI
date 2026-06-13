@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -31,6 +31,23 @@ export default function StrategyPage() {
       toast.error('Failed to generate recommendations')
     }
   })
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const action = params.get('action');
+      if (action) {
+        const q = `How do we execute this strategic action: "${action}"?`;
+        setQuestion(q);
+        // Add a slight delay to allow UI to render first
+        setTimeout(() => {
+          strategyMutation.mutate(q);
+        }, 100);
+        // Remove param from URL to prevent infinite triggers on refresh
+        window.history.replaceState({}, '', '/strategy');
+      }
+    }
+  }, []);
 
   const handleGenerate = (e: React.FormEvent) => {
     e.preventDefault()

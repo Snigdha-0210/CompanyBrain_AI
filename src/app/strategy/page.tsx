@@ -157,31 +157,44 @@ export default function StrategyPage() {
                       <motion.div 
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
-                        className="w-full p-6 border-t bg-white dark:bg-slate-950"
+                        className="w-full p-6 border-t bg-slate-50 dark:bg-slate-900/50"
                       >
-                        <h4 className="text-sm font-semibold mb-6 flex items-center gap-2">
-                          <BarChart3 className="h-4 w-4 text-blue-600" />
-                          {rec.chartTitle || "Supporting Data"}
-                        </h4>
-                        <div className="h-[250px] w-full">
-                          <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={rec.chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                              <defs>
-                                <linearGradient id={`colorValue${rec.id}`} x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="5%" stopColor="#2563eb" stopOpacity={0.3}/>
-                                  <stop offset="95%" stopColor="#2563eb" stopOpacity={0}/>
-                                </linearGradient>
-                              </defs>
-                              <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fontSize: 12 }} dy={10} />
-                              <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12 }} />
-                              <CartesianGrid vertical={false} strokeDasharray="3 3" opacity={0.5} />
-                              <Tooltip 
-                                contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} 
-                                formatter={(value: any) => [`${value}`, "Value"]}
-                              />
-                              <Area type="monotone" dataKey="value" stroke="#2563eb" strokeWidth={3} fillOpacity={1} fill={`url(#colorValue${rec.id})`} />
-                            </AreaChart>
-                          </ResponsiveContainer>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                          <div className="space-y-4">
+                            <h4 className="text-sm font-semibold flex items-center gap-2 text-slate-900 dark:text-slate-100">
+                              <BrainCircuit className="h-4 w-4 text-blue-600" />
+                              Execution Strategy
+                            </h4>
+                            <div className="text-sm text-muted-foreground leading-relaxed">
+                              {rec.detailedAnalysis || "Generating detailed execution plan..."}
+                            </div>
+                          </div>
+                          <div className="space-y-4">
+                            <h4 className="text-sm font-semibold flex items-center gap-2 text-slate-900 dark:text-slate-100">
+                              <BarChart3 className="h-4 w-4 text-blue-600" />
+                              {rec.chartTitle || "Supporting Data"}
+                            </h4>
+                            <div className="h-[200px] w-full bg-white dark:bg-slate-950 p-4 rounded-xl border shadow-sm">
+                              <ResponsiveContainer width="100%" height="100%">
+                                <AreaChart data={rec.chartData} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
+                                  <defs>
+                                    <linearGradient id={`colorValue${rec.id}`} x1="0" y1="0" x2="0" y2="1">
+                                      <stop offset="5%" stopColor="#2563eb" stopOpacity={0.3}/>
+                                      <stop offset="95%" stopColor="#2563eb" stopOpacity={0}/>
+                                    </linearGradient>
+                                  </defs>
+                                  <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fontSize: 11 }} dy={10} />
+                                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11 }} />
+                                  <CartesianGrid vertical={false} strokeDasharray="3 3" opacity={0.5} />
+                                  <Tooltip 
+                                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', fontSize: '12px' }} 
+                                    formatter={(value: any) => [`${value}`, "Value"]}
+                                  />
+                                  <Area type="monotone" dataKey="value" stroke="#2563eb" strokeWidth={3} fillOpacity={1} fill={`url(#colorValue${rec.id})`} />
+                                </AreaChart>
+                              </ResponsiveContainer>
+                            </div>
+                          </div>
                         </div>
                       </motion.div>
                     )}

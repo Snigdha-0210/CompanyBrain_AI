@@ -6,6 +6,8 @@
 
 ## Overview
 
+🚀 **Live Demo:** [https://companybrain-ai.vercel.app](https://companybrain-ai.vercel.app) *(Note: Depending on your Vercel settings, this URL might have a slightly different suffix).*
+
 CompanyBrain_AI is an autonomous AI Executive advisor. It acts as an AI COO for your company, seamlessly connecting the dots between your contracts, financial reports, meeting notes, and strategy roadmaps to eliminate blind spots. 
 
 Instead of a standard "PDF chatbot", CompanyBrain_AI ingests entire folders of unstructured data to:

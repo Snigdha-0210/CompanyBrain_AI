@@ -5,6 +5,55 @@ import { RISK_SYSTEM_PROMPT } from '@/lib/ai/prompts'
 
 export async function GET() {
   try {
+    // TEMPORARY OVERRIDE FOR HACKATHON VIDEO DEMO
+    return NextResponse.json({
+      overallRiskScore: 78,
+      riskTrend: [
+        { month: "Jan", score: 45 },
+        { month: "Feb", score: 48 },
+        { month: "Mar", score: 52 },
+        { month: "Apr", score: 61 },
+        { month: "May", score: 68 },
+        { month: "Jun", score: 78 }
+      ],
+      highRiskProjects: [
+        {
+          name: "Project Phoenix Cloud Migration",
+          risk: "Critical",
+          reason: "Delayed by 4 weeks due to vendor supply chain issues.",
+          impact: "Budget overrun of $150,000 and Q3 launch delay."
+        },
+        {
+          name: "EU Data Center Expansion",
+          risk: "High",
+          reason: "Failing critical SOC2 compliance checks.",
+          impact: "Potential regulatory fines and service disruption."
+        }
+      ],
+      complianceGaps: [
+        {
+          area: "SOC2 Compliance (EU Region)",
+          severity: "High",
+          deadline: "Nov 1st, 2026"
+        },
+        {
+          area: "Vendor Data Processing Agreements",
+          severity: "Medium",
+          deadline: "Dec 15th, 2026"
+        }
+      ],
+      financialRisks: [
+        {
+          description: "Currency fluctuation on international vendor contracts",
+          exposure: "$450,000"
+        },
+        {
+          description: "Penalty clauses on delayed Cloud Migration",
+          exposure: "$125,000 / month"
+        }
+      ]
+    })
+
     const store = await getVectorStore()
     
     // Query specifically for risk-related content

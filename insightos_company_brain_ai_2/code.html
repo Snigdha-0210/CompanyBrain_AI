@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Company Brain | InsightOS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-secondary": "#ffffff",
+                "primary": "#004ac6",
+                "on-tertiary-fixed": "#001e2f",
+                "surface-container-lowest": "#ffffff",
+                "on-surface": "#131b2e",
+                "secondary-fixed-dim": "#b9c7df",
+                "outline-variant": "#c3c6d7",
+                "inverse-primary": "#b4c5ff",
+                "surface-bright": "#faf8ff",
+                "tertiary-fixed-dim": "#89ceff",
+                "on-error": "#ffffff",
+                "surface-variant": "#dae2fd",
+                "on-secondary-container": "#57657a",
+                "primary-container": "#2563eb",
+                "on-secondary-fixed": "#0d1c2e",
+                "on-tertiary-fixed-variant": "#004c6e",
+                "error-container": "#ffdad6",
+                "tertiary": "#005a82",
+                "inverse-surface": "#283044",
+                "inverse-on-surface": "#eef0ff",
+                "on-primary": "#ffffff",
+                "secondary": "#515f74",
+                "background": "#faf8ff",
+                "surface-container-highest": "#dae2fd",
+                "on-tertiary": "#ffffff",
+                "surface-tint": "#0053db",
+                "surface": "#faf8ff",
+                "primary-fixed": "#dbe1ff",
+                "surface-container-low": "#f2f3ff",
+                "surface-dim": "#d2d9f4",
+                "on-surface-variant": "#434655",
+                "secondary-fixed": "#d5e3fc",
+                "on-secondary-fixed-variant": "#3a485b",
+                "secondary-container": "#d5e3fc",
+                "on-tertiary-container": "#e4f2ff",
+                "tertiary-container": "#0074a6",
+                "tertiary-fixed": "#c9e6ff",
+                "outline": "#737686",
+                "on-primary-fixed-variant": "#003ea8",
+                "on-error-container": "#93000a",
+                "surface-container": "#eaedff",
+                "error": "#ba1a1a",
+                "on-primary-container": "#eeefff",
+                "primary-fixed-dim": "#b4c5ff",
+                "on-primary-fixed": "#00174b",
+                "on-background": "#131b2e",
+                "surface-container-high": "#e2e7ff"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "max-width": "1440px",
+                "xs": "0.25rem",
+                "sm": "0.5rem",
+                "md": "1rem",
+                "gutter": "1.5rem",
+                "xl": "2rem",
+                "base": "4px",
+                "margin": "2rem",
+                "lg": "1.5rem"
+            },
+            "fontFamily": {
+                "code": ["monospace"],
+                "headline-lg": ["Geist"],
+                "label-sm": ["Geist"],
+                "body-lg": ["Inter"],
+                "body-md": ["Inter"],
+                "headline-lg-mobile": ["Geist"],
+                "label-md": ["Geist"],
+                "display": ["Geist"],
+                "headline-md": ["Geist"]
+            },
+            "fontSize": {
+                "code": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #faf8ff; color: #131b2e; overflow-x: hidden; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid #e2e8f0; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .sidebar-active-indicator { position: absolute; left: 0; width: 2px; height: 100%; background: #004ac6; }
+    </style>
+</head>
+<body class="font-body-md text-body-md">
+<!-- SIDE NAVBAR (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface border-r border-outline-variant flex flex-col py-md z-50">
+<div class="px-gutter mb-xl">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Apex Dynamics</h1>
+<p class="font-label-sm text-label-sm text-secondary">Enterprise Strategy</p>
+</div>
+<nav class="flex-1 flex flex-col gap-1 px-sm">
+<!-- Dashboard -->
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<!-- Company Brain (Active) -->
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-primary bg-secondary-container border-l-2 border-primary font-bold transition-all duration-200" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-body-md">Company Brain</span>
+</a>
+<!-- Cross-Doc Intel -->
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors group" href="#">
+<span class="material-symbols-outlined">compare_arrows</span>
+<span class="font-body-md">Cross-Doc Intel</span>
+</a>
+<!-- Insights Center -->
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors group" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-body-md">Insights Center</span>
+</a>
+<!-- Contradiction Detector -->
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors group" href="#">
+<span class="material-symbols-outlined">rule</span>
+<span class="font-body-md">Contradiction Detector</span>
+</a>
+<!-- Doc Hub -->
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors group" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+<span class="font-body-md">Doc Hub</span>
+</a>
+<!-- Executive Advisor -->
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors group" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-body-md">Executive Advisor</span>
+</a>
+</nav>
+<div class="px-sm mt-auto flex flex-col gap-1">
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-body-md">Support</span>
+</a>
+</div>
+</aside>
+<!-- TOP NAVBAR (Shared Component) -->
+<header class="fixed top-0 left-[280px] right-0 h-14 flex justify-between items-center px-gutter bg-surface border-b border-outline-variant z-40">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-black text-on-surface">InsightOS</span>
+<div class="relative group">
+<input class="bg-surface-container-low border-none rounded-full px-10 py-1 text-label-md w-64 focus:ring-2 focus:ring-primary transition-all" placeholder="Search Workspace..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</button>
+<button class="flex items-center gap-2 pl-2 border-l border-outline-variant">
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden">
+<img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcG0S348uCcZV_kvO4RumYUDrVZkSHf5Bnw4BD6xtIbzuZBZOFPs7jxothW_1Hmb67U25XnxfDbvcRW0Kl1GyAuvie3xkI05Kk00jM-oFQTAgtSDjaZRW3t9rmYJUkAmv2_YJFBEpP_KHz5rxxp2IP8FXIkDI2bcO5UUV1PNS7QxdokXotkSbzaVMRGOVYl9-d28US_YeYHLo4y9F5cDth1bW-cFgl5rASXCf9pyDUe4GTWLjpFGV4HqEzqzlb7KbrTczN-xZyZGG8"/>
+</div>
+</button>
+</div>
+</header>
+<!-- MAIN CONTENT AREA -->
+<main class="ml-[280px] mt-14 p-gutter h-[calc(100vh-3.5rem)] flex gap-gutter">
+<!-- CENTRAL CHAT INTERFACE -->
+<div class="flex-1 flex flex-col max-w-[900px] mx-auto h-full">
+<!-- HEADER INFO -->
+<div class="mb-lg">
+<h2 class="font-headline-lg text-headline-lg text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">psychology</span>
+                    Company Brain
+                </h2>
+<p class="text-on-surface-variant font-body-md">Unified Intelligence across all enterprise assets.</p>
+</div>
+<!-- CHAT FEED -->
+<div class="flex-1 overflow-y-auto custom-scrollbar flex flex-col gap-lg pb-xl">
+<!-- AI Response Message -->
+<div class="flex flex-col gap-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+</div>
+<span class="font-label-md text-primary font-bold">InsightOS AI</span>
+</div>
+<div class="glass-panel p-lg rounded-xl shadow-sm border-l-4 border-l-primary">
+<p class="font-body-md text-on-surface mb-md">
+                            Analyzing **Project Orion** based on current operational data...
+                        </p>
+<div class="space-y-sm">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-error mt-1 text-[18px]">warning</span>
+<p class="text-body-md text-on-surface">The primary risk is a **3-week delay in the manufacturing timeline** due to supply chain bottlenecks identified in the *Client Contract Alpha* and the latest *Q2 Revenue Report*.</p>
+</div>
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary mt-1 text-[18px]">info</span>
+<p class="text-body-md text-on-surface">Budget utilization is currently at **82%**, with a projected overage of $45,000 if the delay isn't mitigated by EOM.</p>
+</div>
+</div>
+<!-- SOURCE ATTRIBUTION (Inline) -->
+<div class="mt-lg pt-md border-t border-outline-variant">
+<span class="text-label-sm text-secondary block mb-sm uppercase tracking-wider">Sources Used</span>
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-low rounded-full border border-outline-variant hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[14px] text-primary">description</span>
+<span class="text-label-sm font-medium">Q2 Revenue Report</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-low rounded-full border border-outline-variant hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[14px] text-primary">gavel</span>
+<span class="text-label-sm font-medium">Client Contract Alpha</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-low rounded-full border border-outline-variant hover:bg-surface-container transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[14px] text-primary">event_note</span>
+<span class="text-label-sm font-medium">Internal Roadmap 2024</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Suggested Questions Grid -->
+<div class="mt-auto pt-lg">
+<p class="text-label-sm text-secondary mb-md">Suggested Questions</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<button class="p-md text-left glass-panel rounded-lg hover:border-primary hover:bg-surface-container-low transition-all group">
+<span class="text-label-md font-semibold text-on-surface group-hover:text-primary transition-colors">Who is our biggest client?</span>
+<p class="text-label-sm text-on-surface-variant mt-1">Based on multi-year revenue tracking.</p>
+</button>
+<button class="p-md text-left glass-panel rounded-lg hover:border-primary hover:bg-surface-container-low transition-all group">
+<span class="text-label-md font-semibold text-on-surface group-hover:text-primary transition-colors">What are the major risks for Project Orion?</span>
+<p class="text-label-sm text-on-surface-variant mt-1">Synthesizing timelines and contracts.</p>
+</button>
+<button class="p-md text-left glass-panel rounded-lg hover:border-primary hover:bg-surface-container-low transition-all group">
+<span class="text-label-md font-semibold text-on-surface group-hover:text-primary transition-colors">Summarize company health.</span>
+<p class="text-label-sm text-on-surface-variant mt-1">Key metrics and recent highlights.</p>
+</button>
+</div>
+</div>
+</div>
+<!-- EXECUTIVE SEARCH INPUT -->
+<div class="relative pb-gutter">
+<div class="absolute -top-12 left-0 right-0 h-12 bg-gradient-to-t from-background to-transparent pointer-events-none"></div>
+<div class="relative group">
+<input class="w-full h-16 bg-white border border-outline-variant rounded-xl px-14 py-4 font-body-lg text-body-lg shadow-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-outline" placeholder="Ask anything about your business..." type="text"/>
+<span class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-primary text-3xl">psychology</span>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
+<span class="text-label-sm text-outline px-2 py-1 bg-surface-container rounded hidden md:block">⌘ K</span>
+<button class="bg-primary text-white p-2 rounded-lg hover:bg-primary-container transition-colors shadow-md">
+<span class="material-symbols-outlined">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT SIDEBAR: REASONING & CONTEXT -->
+<aside class="w-[340px] flex flex-col gap-gutter">
+<!-- REASONING SUMMARY PANEL -->
+<div class="glass-panel rounded-xl p-lg flex flex-col gap-md shadow-sm">
+<h3 class="font-label-md font-bold text-on-surface flex items-center justify-between">
+                    Reasoning Engine
+                    <span class="text-primary material-symbols-outlined text-[18px]">verified</span>
+</h3>
+<div class="space-y-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">analytics</span>
+<span class="text-body-md">Documents Analyzed</span>
+</div>
+<span class="font-code font-bold text-on-surface">07</span>
+</div>
+<div class="flex flex-col gap-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span class="text-body-md">Confidence Score</span>
+</div>
+<span class="font-code font-bold text-primary">92%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[92%] transition-all duration-700"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">hub</span>
+<span class="text-body-md">Key Relationships</span>
+</div>
+<span class="font-code font-bold text-on-surface">14</span>
+</div>
+</div>
+<div class="mt-sm p-sm bg-surface-container-low rounded border border-outline-variant border-dashed">
+<p class="text-label-sm italic text-on-surface-variant leading-relaxed">
+                        "Cross-referenced financial trajectories with legal risk clauses found in the latest repository upload."
+                    </p>
+</div>
+</div>
+<!-- ACTIVE CONTEXT SIDEBAR -->
+<div class="flex-1 glass-panel rounded-xl p-lg flex flex-col gap-md overflow-hidden shadow-sm">
+<h3 class="font-label-md font-bold text-on-surface">Active Intelligence Context</h3>
+<div class="flex-1 flex flex-col gap-sm overflow-y-auto custom-scrollbar pr-1">
+<!-- Category: Financial Data -->
+<div class="p-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group">
+<div class="flex items-center gap-3 mb-1">
+<span class="material-symbols-outlined text-primary text-[20px]">payments</span>
+<span class="font-label-md text-on-surface">Financial Data</span>
+</div>
+<p class="text-label-sm text-on-surface-variant">Q2-Q4 Projections, Tax Ledgers</p>
+</div>
+<!-- Category: Contracts -->
+<div class="p-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer border-l-2 border-primary">
+<div class="flex items-center gap-3 mb-1">
+<span class="material-symbols-outlined text-primary text-[20px]">gavel</span>
+<span class="font-label-md text-on-surface">Contracts</span>
+</div>
+<p class="text-label-sm text-on-surface-variant">24 Active Agreements Linked</p>
+</div>
+<!-- Category: Roadmaps -->
+<div class="p-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-3 mb-1">
+<span class="material-symbols-outlined text-primary text-[20px]">map</span>
+<span class="font-label-md text-on-surface">Roadmaps</span>
+</div>
+<p class="text-label-sm text-on-surface-variant">Strategy 2025, Product V3</p>
+</div>
+<!-- Category: Meeting Notes -->
+<div class="p-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-3 mb-1">
+<span class="material-symbols-outlined text-primary text-[20px]">history_edu</span>
+<span class="font-label-md text-on-surface">Meeting Notes</span>
+</div>
+<p class="text-label-sm text-on-surface-variant">Last synced: 4 minutes ago</p>
+</div>
+</div>
+<button class="w-full py-md flex items-center justify-center gap-2 text-primary font-label-md hover:bg-primary-container/10 transition-colors rounded-lg border border-primary/20 mt-auto">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Manage Context Sources
+                </button>
+</div>
+<!-- ATMOSPHERIC ELEMENT (AI VISUALIZER) -->
+<div class="relative h-48 rounded-xl overflow-hidden glass-panel border-none">
+
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent flex flex-col justify-end p-lg">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="text-label-sm font-bold text-primary">Brain Pulse Active</span>
+</div>
+<p class="text-label-sm text-on-surface-variant">Continuous monitoring of 4.2k data points.</p>
+</div>
+</div>
+</aside>
+</main>
+<script>
+        // Micro-interaction for search bar focus
+        const searchInput = document.querySelector('input[placeholder="Ask anything about your business..."]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-[1.01]');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-[1.01]');
+        });
+
+        // Toggle context item states (demo only)
+        document.querySelectorAll('.context-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('border-l-2');
+                item.classList.toggle('border-primary');
+            });
+        });
+    </script>
+</body></html>

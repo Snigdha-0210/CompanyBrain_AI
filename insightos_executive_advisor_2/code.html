@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Executive Advisor - InsightOS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "primary": "#004ac6",
+                        "on-tertiary-fixed": "#001e2f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#131b2e",
+                        "secondary-fixed-dim": "#b9c7df",
+                        "outline-variant": "#c3c6d7",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-bright": "#faf8ff",
+                        "tertiary-fixed-dim": "#89ceff",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#dae2fd",
+                        "on-secondary-container": "#57657a",
+                        "primary-container": "#2563eb",
+                        "on-secondary-fixed": "#0d1c2e",
+                        "on-tertiary-fixed-variant": "#004c6e",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#005a82",
+                        "inverse-surface": "#283044",
+                        "inverse-on-surface": "#eef0ff",
+                        "on-primary": "#ffffff",
+                        "secondary": "#515f74",
+                        "background": "#faf8ff",
+                        "surface-container-highest": "#dae2fd",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#0053db",
+                        "surface": "#faf8ff",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container-low": "#f2f3ff",
+                        "surface-dim": "#d2d9f4",
+                        "on-surface-variant": "#434655",
+                        "secondary-fixed": "#d5e3fc",
+                        "on-secondary-fixed-variant": "#3a485b",
+                        "secondary-container": "#d5e3fc",
+                        "on-tertiary-container": "#e4f2ff",
+                        "tertiary-container": "#0074a6",
+                        "tertiary-fixed": "#c9e6ff",
+                        "outline": "#737686",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#eaedff",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#eeefff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-primary-fixed": "#00174b",
+                        "on-background": "#131b2e",
+                        "surface-container-high": "#e2e7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "max-width": "1440px",
+                        "xs": "0.25rem",
+                        "sm": "0.5rem",
+                        "md": "1rem",
+                        "gutter": "1.5rem",
+                        "xl": "2rem",
+                        "base": "4px",
+                        "margin": "2rem",
+                        "lg": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "code": ["monospace"],
+                        "headline-lg": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Geist"],
+                        "label-md": ["Geist"],
+                        "display": ["Geist"],
+                        "headline-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "code": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .nav-active-line { position: absolute; left: 0; width: 2px; height: 100%; background-color: #004ac6; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(226, 232, 240, 0.8); }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- Side Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface dark:bg-surface-dim border-r border-outline-variant flex flex-col py-md z-50">
+<div class="px-gutter mb-xl">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Apex Dynamics</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-70">Enterprise Strategy</p>
+</div>
+<nav class="flex-1 space-y-1 px-sm overflow-y-auto custom-scrollbar">
+<a class="flex items-center px-md py-sm transition-colors text-secondary hover:bg-surface-container-low rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-md">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center px-md py-sm transition-colors text-secondary hover:bg-surface-container-low rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-md">psychology</span>
+<span class="font-label-md text-label-md">Company Brain</span>
+</a>
+<a class="flex items-center px-md py-sm transition-colors text-secondary hover:bg-surface-container-low rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-md">compare_arrows</span>
+<span class="font-label-md text-label-md">Cross-Doc Intel</span>
+</a>
+<a class="flex items-center px-md py-sm transition-colors text-secondary hover:bg-surface-container-low rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-md">insights</span>
+<span class="font-label-md text-label-md">Insights Center</span>
+</a>
+<a class="flex items-center px-md py-sm transition-colors text-secondary hover:bg-surface-container-low rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-md">rule</span>
+<span class="font-label-md text-label-md">Contradiction Detector</span>
+</a>
+<a class="flex items-center px-md py-sm transition-colors text-secondary hover:bg-surface-container-low rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-md">folder_open</span>
+<span class="font-label-md text-label-md">Doc Hub</span>
+</a>
+<a class="flex items-center px-md py-sm transition-all duration-200 ease-in-out text-primary bg-secondary-container border-l-2 border-primary font-bold rounded-lg relative" href="#">
+<span class="material-symbols-outlined mr-md">account_balance</span>
+<span class="font-label-md text-label-md">Executive Advisor</span>
+</a>
+</nav>
+<div class="px-sm mt-auto space-y-1 pt-md border-t border-outline-variant">
+<a class="flex items-center px-md py-sm transition-colors text-secondary hover:bg-surface-container-low rounded-lg" href="#">
+<span class="material-symbols-outlined mr-md">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<a class="flex items-center px-md py-sm transition-colors text-secondary hover:bg-surface-container-low rounded-lg" href="#">
+<span class="material-symbols-outlined mr-md">help_outline</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+<div class="mt-md px-md py-sm bg-surface-container-low rounded-xl flex items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-label-sm">JD</div>
+<div class="overflow-hidden">
+<p class="font-label-md text-label-md truncate">Jane Doe</p>
+<p class="font-label-sm text-label-sm opacity-60 truncate">Chief Strategist</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-[280px] right-0 h-14 bg-surface dark:bg-surface-bright border-b border-outline-variant flex justify-between items-center px-gutter z-40">
+<div class="flex items-center gap-xl">
+<span class="font-headline-md text-headline-md font-black text-on-surface">InsightOS</span>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="bg-surface-container-low border-none rounded-lg pl-10 pr-md py-1.5 w-80 font-body-md text-body-md focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="Search strategy documents..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">bolt</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[280px] pt-14 p-gutter min-h-screen">
+<div class="max-w-max-width mx-auto">
+<!-- Header Section -->
+<section class="mb-lg flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Executive Advisor</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Strategic AI recommendations for management teams.</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-md h-9 border border-outline rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-[20px]">ios_share</span> Export PDF
+                    </button>
+<button class="px-md h-9 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity flex items-center gap-xs shadow-sm">
+<span class="material-symbols-outlined text-[20px]">refresh</span> Refresh Intelligence
+                    </button>
+</div>
+</section>
+<!-- Grid Layout -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Question Area -->
+<div class="col-span-12 lg:col-span-8 space-y-gutter">
+<div class="bg-white border border-outline-variant rounded-xl p-lg shadow-sm">
+<div class="flex items-start gap-md">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+<div class="flex-1">
+<label class="font-label-sm text-label-sm text-primary uppercase tracking-wider mb-xs block">Strategic Inquiry</label>
+<h3 class="font-headline-md text-headline-md mb-md">What should management focus on next quarter?</h3>
+<div class="h-px bg-outline-variant mb-md"></div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                                    Based on Q3 performance gaps, competitive market shifts in the APAC region, and internal resource bottlenecks identified in Project Orion, the AI advisor suggests a pivot toward operational efficiency and tactical diversification.
+                                </p>
+</div>
+</div>
+</div>
+<!-- AI Strategy Response: Top 3 Priorities -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- Priority 1 -->
+<div class="bg-white border border-outline-variant rounded-xl p-md flex flex-col justify-between group hover:border-primary transition-colors cursor-default">
+<div>
+<span class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm mb-sm">1</span>
+<h4 class="font-label-md text-label-md font-bold mb-xs">Reduce churn</h4>
+<p class="font-body-sm text-label-sm text-on-surface-variant opacity-80">Stabilize the Tier-2 enterprise segment where attrition rose by 12%.</p>
+</div>
+<div class="mt-md pt-sm border-t border-outline-variant flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-tertiary">Critical Path</span>
+<span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+</div>
+<!-- Priority 2 -->
+<div class="bg-white border border-outline-variant rounded-xl p-md flex flex-col justify-between group hover:border-primary transition-colors cursor-default">
+<div>
+<span class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm mb-sm">2</span>
+<h4 class="font-label-md text-label-md font-bold mb-xs">Accelerate Orion</h4>
+<p class="font-body-sm text-label-sm text-on-surface-variant opacity-80">Shift R&amp;D budget from legacy maintenance to the Project Orion pilot.</p>
+</div>
+<div class="mt-md pt-sm border-t border-outline-variant flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-tertiary">Growth Focus</span>
+<span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+</div>
+<!-- Priority 3 -->
+<div class="bg-white border border-outline-variant rounded-xl p-md flex flex-col justify-between group hover:border-primary transition-colors cursor-default">
+<div>
+<span class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm mb-sm">3</span>
+<h4 class="font-label-md text-label-md font-bold mb-xs">Diversify suppliers</h4>
+<p class="font-body-sm text-label-sm text-on-surface-variant opacity-80">Mitigate geopolitical risk by onboarding three secondary regional vendors.</p>
+</div>
+<div class="mt-md pt-sm border-t border-outline-variant flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-tertiary">Risk Mitigation</span>
+<span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Strategic Roadmap Timeline -->
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="px-lg py-md border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<h4 class="font-label-md text-label-md font-bold uppercase tracking-widest text-on-surface">Strategic Roadmap Timeline</h4>
+<div class="flex gap-xs">
+<span class="px-sm py-1 bg-primary/10 text-primary rounded font-label-sm text-[10px] uppercase">Plan Year 2024</span>
+</div>
+</div>
+<div class="p-lg">
+<div class="relative">
+<!-- Timeline Grid Lines -->
+<div class="absolute inset-0 flex justify-between px-2">
+<div class="h-full border-l border-dashed border-outline-variant"></div>
+<div class="h-full border-l border-dashed border-outline-variant"></div>
+<div class="h-full border-l border-dashed border-outline-variant"></div>
+<div class="h-full border-l border-dashed border-outline-variant"></div>
+<div class="h-full border-l border-dashed border-outline-variant"></div>
+</div>
+<div class="relative space-y-md">
+<div class="flex items-center">
+<div class="w-32 font-label-sm text-label-sm text-on-surface-variant">Retention</div>
+<div class="flex-1 h-8 relative">
+<div class="absolute left-[0%] w-[45%] h-full bg-primary-container/20 border border-primary-container rounded flex items-center px-md text-primary font-label-sm">Churn Remediation</div>
+</div>
+</div>
+<div class="flex items-center">
+<div class="w-32 font-label-sm text-label-sm text-on-surface-variant">R&amp;D</div>
+<div class="flex-1 h-8 relative">
+<div class="absolute left-[30%] w-[60%] h-full bg-tertiary-container/20 border border-tertiary-container rounded flex items-center px-md text-tertiary font-label-sm">Orion Phase II &amp; Alpha</div>
+</div>
+</div>
+<div class="flex items-center">
+<div class="w-32 font-label-sm text-label-sm text-on-surface-variant">Supply Chain</div>
+<div class="flex-1 h-8 relative">
+<div class="absolute left-[50%] w-[35%] h-full bg-secondary-container/20 border border-secondary-container rounded flex items-center px-md text-secondary font-label-sm">Vendor Diversification</div>
+</div>
+</div>
+</div>
+<div class="flex justify-between mt-md px-2 font-label-sm text-[11px] text-on-surface-variant opacity-60">
+<span>Q1</span>
+<span>Q2</span>
+<span>Q3</span>
+<span>Q4</span>
+<span>2025</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar Panels -->
+<div class="col-span-12 lg:col-span-4 space-y-gutter">
+<!-- Priority Matrix -->
+<div class="bg-white border border-outline-variant rounded-xl p-lg shadow-sm">
+<div class="flex items-center justify-between mb-lg">
+<h4 class="font-label-md text-label-md font-bold">Priority Matrix</h4>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">info</span>
+</div>
+<div class="aspect-square relative border-l border-b border-outline-variant">
+<!-- Matrix Labels -->
+<div class="absolute -left-10 top-1/2 -translate-y-1/2 -rotate-90 font-label-sm text-[10px] uppercase text-on-surface-variant">Impact</div>
+<div class="absolute left-1/2 -bottom-6 -translate-x-1/2 font-label-sm text-[10px] uppercase text-on-surface-variant">Urgency</div>
+<!-- Grid -->
+<div class="absolute inset-0 grid grid-cols-2 grid-rows-2">
+<div class="border-r border-b border-outline-variant/30 bg-error-container/5"></div>
+<div class="border-b border-outline-variant/30 bg-primary-container/5"></div>
+<div class="border-r border-outline-variant/30"></div>
+<div class="bg-secondary-container/5"></div>
+</div>
+<!-- Data Points -->
+<div class="absolute top-[20%] right-[15%] w-4 h-4 bg-primary rounded-full shadow-lg cursor-pointer group" title="Reduce Churn">
+<div class="absolute hidden group-hover:block bottom-full left-1/2 -translate-x-1/2 mb-2 w-32 bg-inverse-surface text-inverse-on-surface text-[10px] p-2 rounded text-center">
+                                    Reduce Churn (High Impact, High Urgency)
+                                </div>
+</div>
+<div class="absolute top-[40%] right-[40%] w-4 h-4 bg-tertiary rounded-full shadow-lg cursor-pointer group" title="Accelerate Orion">
+<div class="absolute hidden group-hover:block bottom-full left-1/2 -translate-x-1/2 mb-2 w-32 bg-inverse-surface text-inverse-on-surface text-[10px] p-2 rounded text-center">
+                                    Accelerate Orion (Med-High Impact/Urgency)
+                                </div>
+</div>
+<div class="absolute bottom-[30%] left-[30%] w-4 h-4 bg-secondary rounded-full shadow-lg cursor-pointer group" title="Diversify Suppliers">
+<div class="absolute hidden group-hover:block bottom-full left-1/2 -translate-x-1/2 mb-2 w-32 bg-inverse-surface text-inverse-on-surface text-[10px] p-2 rounded text-center">
+                                    Diversify Suppliers (Med Impact, Med Urgency)
+                                </div>
+</div>
+</div>
+<div class="mt-8 flex gap-md justify-center">
+<div class="flex items-center gap-xs"><span class="w-2 h-2 rounded-full bg-primary"></span><span class="text-[11px] font-label-sm">Churn</span></div>
+<div class="flex items-center gap-xs"><span class="w-2 h-2 rounded-full bg-tertiary"></span><span class="text-[11px] font-label-sm">Orion</span></div>
+<div class="flex items-center gap-xs"><span class="w-2 h-2 rounded-full bg-secondary"></span><span class="text-[11px] font-label-sm">Suppliers</span></div>
+</div>
+</div>
+<!-- Strategy Visualization Scoring -->
+<div class="bg-white border border-outline-variant rounded-xl p-lg shadow-sm">
+<h4 class="font-label-md text-label-md font-bold mb-md">Confidence Scores</h4>
+<div class="space-y-md">
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span>Reduce Churn</span>
+<span class="font-bold">92%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 92%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span>Accelerate Orion</span>
+<span class="font-bold">78%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-tertiary" style="width: 78%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span>Diversify Suppliers</span>
+<span class="font-bold">64%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 64%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Executive Briefing Panel -->
+<div class="bg-inverse-surface text-inverse-on-surface rounded-xl p-lg shadow-md relative overflow-hidden">
+<!-- Decorative glow -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/20 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-primary-fixed">contract</span>
+<h4 class="font-label-md text-label-md font-bold uppercase tracking-widest">Executive Briefing</h4>
+</div>
+<p class="font-body-md text-body-md leading-relaxed opacity-90 mb-lg">
+                                Management should prioritize the "Stability-First" model for the upcoming quarter. By front-loading churn reduction in the first 45 days, we secure the capital runway needed for the Orion transition in Q3. Geopolitical supplier shifts are recommended as a secondary passive stream starting immediately.
+                            </p>
+<div class="p-md bg-white/5 rounded-lg border border-white/10">
+<p class="font-label-sm text-label-sm italic opacity-70">"Calculated risk in Orion is offset by the defensive posture in the enterprise segment. Deployment recommended."</p>
+<div class="mt-sm flex items-center gap-xs">
+<div class="w-4 h-4 rounded-full bg-green-500"></div>
+<span class="text-[10px] font-label-sm">System Verified Confidence: High</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Details Table -->
+<section class="mt-gutter">
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="px-lg py-md border-b border-outline-variant flex justify-between items-center">
+<h4 class="font-label-md text-label-md font-bold">Initiative Drill-down</h4>
+<button class="text-primary font-label-sm text-label-sm hover:underline">View All Documents</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low font-label-sm text-label-sm uppercase text-on-surface-variant">
+<tr>
+<th class="px-lg py-sm border-b border-outline-variant">Initiative</th>
+<th class="px-lg py-sm border-b border-outline-variant text-center">Effort</th>
+<th class="px-lg py-sm border-b border-outline-variant text-center">Impact</th>
+<th class="px-lg py-sm border-b border-outline-variant">Primary Owner</th>
+<th class="px-lg py-sm border-b border-outline-variant">Status</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md border-b border-outline-variant font-medium">Enterprise Success Program</td>
+<td class="px-lg py-md border-b border-outline-variant text-center">Medium</td>
+<td class="px-lg py-md border-b border-outline-variant text-center text-primary font-bold">High</td>
+<td class="px-lg py-md border-b border-outline-variant">Customer Experience</td>
+<td class="px-lg py-md border-b border-outline-variant">
+<span class="px-sm py-1 bg-green-100 text-green-700 rounded-full text-[10px] font-bold uppercase">Ready</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md border-b border-outline-variant font-medium">Orion Cloud Integration</td>
+<td class="px-lg py-md border-b border-outline-variant text-center">High</td>
+<td class="px-lg py-md border-b border-outline-variant text-center text-primary font-bold">Critical</td>
+<td class="px-lg py-md border-b border-outline-variant">Engineering</td>
+<td class="px-lg py-md border-b border-outline-variant">
+<span class="px-sm py-1 bg-blue-100 text-blue-700 rounded-full text-[10px] font-bold uppercase">Active</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md border-b border-outline-variant font-medium">Regional Supplier Onboarding</td>
+<td class="px-lg py-md border-b border-outline-variant text-center">Low</td>
+<td class="px-lg py-md border-b border-outline-variant text-center text-primary font-bold">Medium</td>
+<td class="px-lg py-md border-b border-outline-variant">Procurement</td>
+<td class="px-lg py-md border-b border-outline-variant">
+<span class="px-sm py-1 bg-amber-100 text-amber-700 rounded-full text-[10px] font-bold uppercase">Review</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Floating Micro-interaction for advisor feedback -->
+<div class="fixed bottom-gutter right-gutter z-50">
+<button class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all group overflow-hidden">
+<span class="material-symbols-outlined group-hover:hidden">chat_bubble</span>
+<span class="material-symbols-outlined hidden group-hover:block">smart_toy</span>
+</button>
+</div>
+<script>
+        // Simple micro-interaction for matrix points
+        document.querySelectorAll('.aspect-square div[title]').forEach(point => {
+            point.addEventListener('mouseenter', () => {
+                point.style.transform = 'scale(1.5)';
+            });
+            point.addEventListener('mouseleave', () => {
+                point.style.transform = 'scale(1)';
+            });
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.classList.add('w-96');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.classList.remove('w-96');
+        });
+    </script>
+</body></html>

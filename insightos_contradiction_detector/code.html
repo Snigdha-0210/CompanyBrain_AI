@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InsightOS — Contradiction Detector</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;900&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary": "#ffffff",
+            "primary": "#004ac6",
+            "on-tertiary-fixed": "#001e2f",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#131b2e",
+            "secondary-fixed-dim": "#b9c7df",
+            "outline-variant": "#c3c6d7",
+            "inverse-primary": "#b4c5ff",
+            "surface-bright": "#faf8ff",
+            "tertiary-fixed-dim": "#89ceff",
+            "on-error": "#ffffff",
+            "surface-variant": "#dae2fd",
+            "on-secondary-container": "#57657a",
+            "primary-container": "#2563eb",
+            "on-secondary-fixed": "#0d1c2e",
+            "on-tertiary-fixed-variant": "#004c6e",
+            "error-container": "#ffdad6",
+            "tertiary": "#005a82",
+            "inverse-surface": "#283044",
+            "inverse-on-surface": "#eef0ff",
+            "on-primary": "#ffffff",
+            "secondary": "#515f74",
+            "background": "#faf8ff",
+            "surface-container-highest": "#dae2fd",
+            "on-tertiary": "#ffffff",
+            "surface-tint": "#0053db",
+            "surface": "#faf8ff",
+            "primary-fixed": "#dbe1ff",
+            "surface-container-low": "#f2f3ff",
+            "surface-dim": "#d2d9f4",
+            "on-surface-variant": "#434655",
+            "secondary-fixed": "#d5e3fc",
+            "on-secondary-fixed-variant": "#3a485b",
+            "secondary-container": "#d5e3fc",
+            "on-tertiary-container": "#e4f2ff",
+            "tertiary-container": "#0074a6",
+            "tertiary-fixed": "#c9e6ff",
+            "outline": "#737686",
+            "on-primary-fixed-variant": "#003ea8",
+            "on-error-container": "#93000a",
+            "surface-container": "#eaedff",
+            "error": "#ba1a1a",
+            "on-primary-container": "#eeefff",
+            "primary-fixed-dim": "#b4c5ff",
+            "on-primary-fixed": "#00174b",
+            "on-background": "#131b2e",
+            "surface-container-high": "#e2e7ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "max-width": "1440px",
+            "xs": "0.25rem",
+            "sm": "0.5rem",
+            "md": "1rem",
+            "gutter": "1.5rem",
+            "xl": "2rem",
+            "base": "4px",
+            "margin": "2rem",
+            "lg": "1.5rem"
+          },
+          "fontFamily": {
+            "code": ["monospace"],
+            "headline-lg": ["Geist"],
+            "label-sm": ["Geist"],
+            "body-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-lg-mobile": ["Geist"],
+            "label-md": ["Geist"],
+            "display": ["Geist"],
+            "headline-md": ["Geist"]
+          },
+          "fontSize": {
+            "code": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+            "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body {
+      background-color: #faf8ff;
+      color: #131b2e;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #c3c6d7;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body class="font-body-md text-body-md">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface border-r border-outline-variant flex flex-col py-md z-50">
+<div class="px-gutter mb-xl">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Apex Dynamics</h1>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Enterprise Strategy</p>
+</div>
+<nav class="flex-1 space-y-1 px-sm overflow-y-auto custom-scrollbar">
+<!-- Active Item: Contradiction Detector -->
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span>Company Brain</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">compare_arrows</span>
+<span>Cross-Doc Intel</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span>Insights Center</span>
+</a>
+<!-- ACTIVE TAB -->
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-primary bg-secondary-container border-l-2 border-primary font-bold font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">rule</span>
+<span>Contradiction Detector</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+<span>Doc Hub</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span>Executive Advisor</span>
+</a>
+</nav>
+<div class="px-sm pt-md border-t border-outline-variant space-y-1">
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-secondary hover:bg-surface-container-low transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-[280px] h-14 bg-surface border-b border-outline-variant flex justify-between items-center px-gutter z-40">
+<div class="flex items-center gap-md w-1/2">
+<h2 class="font-headline-md text-headline-md font-black text-on-surface mr-gutter">InsightOS</h2>
+<div class="relative w-full max-w-sm">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full h-9 pl-10 pr-4 bg-surface-container-low border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Search knowledge graph..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">bolt</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center text-white cursor-pointer overflow-hidden">
+<span class="material-symbols-outlined">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Main Content Stage -->
+<main class="ml-[280px] pt-14 p-gutter min-h-screen">
+<!-- Page Header -->
+<div class="mb-gutter flex items-center justify-between">
+<div>
+<h3 class="font-headline-lg text-headline-lg">Contradiction Detector</h3>
+<p class="text-secondary font-body-md">Auditing cross-functional alignment and strategic consistency.</p>
+</div>
+<div class="flex gap-sm">
+<button class="flex items-center gap-xs px-md h-9 bg-white border border-outline-variant rounded text-on-surface font-label-md hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+          Filter
+        </button>
+<button class="flex items-center gap-xs px-md h-9 bg-primary text-white rounded font-label-md hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+          Rescan Now
+        </button>
+</div>
+</div>
+<!-- Contradiction Core Analysis Panel -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter mb-gutter">
+<!-- Status Summary Card -->
+<div class="lg:col-span-1 bg-white border border-outline-variant rounded-xl p-lg flex flex-col justify-between shadow-sm">
+<div>
+<div class="flex items-center justify-between mb-md">
+<span class="font-label-md px-sm py-xs bg-error-container text-error rounded-lg flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">error</span>
+              High Severity
+            </span>
+<span class="text-secondary font-code text-code">ID: CT-4092</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-xs">Potential Contradiction Detected</h4>
+<p class="text-on-surface-variant font-body-md mb-lg">A logic mismatch has been identified between regional growth objectives and fiscal allocations.</p>
+<div class="space-y-md">
+<div class="flex items-center justify-between">
+<span class="text-secondary font-label-sm">Confidence Score</span>
+<span class="text-primary font-bold text-headline-md">92%</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[92%]"></div>
+</div>
+</div>
+</div>
+<div class="mt-xl pt-lg border-t border-outline-variant">
+<h5 class="font-label-md text-on-surface mb-sm">Resolution Suggestion</h5>
+<div class="bg-surface-container-low border-l-4 border-primary p-md rounded-r-lg">
+<p class="text-body-md italic text-on-surface-variant">"The 'Strategy Document' expects rapid EU scaling, but the 'Budget Report' provides no funding for this region. Review budget allocation before approval."</p>
+</div>
+<div class="mt-md flex gap-sm">
+<button class="flex-1 h-9 bg-primary text-on-primary rounded font-label-md">Align Documents</button>
+<button class="flex-1 h-9 bg-surface-container-highest text-on-surface rounded font-label-md">Dismiss</button>
+</div>
+</div>
+</div>
+<!-- Evidence Side-by-Side Panel -->
+<div class="lg:col-span-2 bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm flex flex-col">
+<div class="px-gutter py-md bg-surface-container-low border-b border-outline-variant flex items-center justify-between">
+<span class="font-label-md text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">find_in_page</span>
+            Evidence Viewer
+          </span>
+<div class="flex gap-xs">
+<button class="p-1 hover:bg-surface-container-high rounded"><span class="material-symbols-outlined text-[18px]">zoom_in</span></button>
+<button class="p-1 hover:bg-surface-container-high rounded"><span class="material-symbols-outlined text-[18px]">open_in_new</span></button>
+</div>
+</div>
+<div class="flex-1 grid grid-cols-2">
+<!-- Document A -->
+<div class="p-gutter border-r border-outline-variant">
+<div class="flex items-center gap-sm mb-md">
+<div class="h-10 w-10 bg-blue-50 text-blue-600 rounded flex items-center justify-center">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div>
+<p class="font-label-md leading-none">Strategy Document</p>
+<p class="text-label-sm text-secondary">Updated: 2h ago</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-lg border border-outline-variant font-code text-code text-on-surface-variant relative">
+<div class="absolute -left-1 top-4 h-6 w-1 bg-primary"></div>
+<p class="mb-sm">...Section 4.2 (Global Scaling):</p>
+<p class="text-on-surface bg-primary-fixed/20 p-xs rounded">"Our primary objective for Q4 is to <span class="font-bold underline decoration-primary">Expand to Europe</span>, specifically targeting the DACH region for localized operations..."</p>
+</div>
+</div>
+<!-- Document B -->
+<div class="p-gutter">
+<div class="flex items-center gap-sm mb-md">
+<div class="h-10 w-10 bg-orange-50 text-orange-600 rounded flex items-center justify-center">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="font-label-md leading-none">Budget Report</p>
+<p class="text-label-sm text-secondary">Updated: 1d ago</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-lg border border-outline-variant font-code text-code text-on-surface-variant relative">
+<div class="absolute -left-1 top-4 h-6 w-1 bg-error"></div>
+<p class="mb-sm">...Appendix G (Operational Expenses):</p>
+<p class="text-on-surface bg-error-container/40 p-xs rounded">"Projected expenditure for new territories: <span class="font-bold underline decoration-error">Europe Budget = $0</span>. Funds redistributed to APAC automation initiative."</p>
+</div>
+</div>
+</div>
+<div class="p-md bg-surface-container-highest text-center text-label-sm text-secondary">
+          Click snippets to view full document context
+        </div>
+</div>
+</div>
+<!-- Timeline of Other Contradictions -->
+<div class="bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="px-gutter py-md border-b border-outline-variant flex items-center justify-between">
+<h4 class="font-label-md text-on-surface">Queue of Detected Inconsistencies</h4>
+<span class="text-label-sm bg-surface-container-high px-sm py-1 rounded-full text-secondary">4 Pending Items</span>
+</div>
+<table class="w-full text-left font-body-md border-collapse">
+<thead>
+<tr class="bg-surface-container-low font-label-sm text-secondary border-b border-outline-variant">
+<th class="px-gutter py-md uppercase">Subject</th>
+<th class="px-gutter py-md uppercase">Contradicting Docs</th>
+<th class="px-gutter py-md uppercase">Confidence</th>
+<th class="px-gutter py-md uppercase">Status</th>
+<th class="px-gutter py-md uppercase text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="px-gutter py-md">
+<p class="font-bold text-on-surface">Roadmap vs Resources</p>
+<p class="text-label-sm text-secondary">Q3 Feature Launch vs Staffing Plan</p>
+</td>
+<td class="px-gutter py-md">
+<div class="flex -space-x-2">
+<div class="h-8 w-8 rounded-full border-2 border-white bg-surface-variant flex items-center justify-center" title="Product Roadmap"><span class="material-symbols-outlined text-[16px]">map</span></div>
+<div class="h-8 w-8 rounded-full border-2 border-white bg-surface-variant flex items-center justify-center" title="HR Headcount"><span class="material-symbols-outlined text-[16px]">groups</span></div>
+</div>
+</td>
+<td class="px-gutter py-md">
+<div class="flex items-center gap-sm">
+<div class="flex-1 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[78%]"></div>
+</div>
+<span class="text-label-sm font-bold">78%</span>
+</div>
+</td>
+<td class="px-gutter py-md">
+<span class="px-sm py-1 rounded-full bg-secondary-container text-on-secondary-fixed-variant text-label-sm">Under Review</span>
+</td>
+<td class="px-gutter py-md text-right">
+<button class="text-primary hover:underline font-label-md">Analyze</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="px-gutter py-md">
+<p class="font-bold text-on-surface">Marketing vs Compliance</p>
+<p class="text-label-sm text-secondary">Ad Campaign Copy vs Data Privacy Policy</p>
+</td>
+<td class="px-gutter py-md">
+<div class="flex -space-x-2">
+<div class="h-8 w-8 rounded-full border-2 border-white bg-surface-variant flex items-center justify-center"><span class="material-symbols-outlined text-[16px]">campaign</span></div>
+<div class="h-8 w-8 rounded-full border-2 border-white bg-surface-variant flex items-center justify-center"><span class="material-symbols-outlined text-[16px]">gavel</span></div>
+</div>
+</td>
+<td class="px-gutter py-md">
+<div class="flex items-center gap-sm">
+<div class="flex-1 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[85%]"></div>
+</div>
+<span class="text-label-sm font-bold">85%</span>
+</div>
+</td>
+<td class="px-gutter py-md">
+<span class="px-sm py-1 rounded-full bg-error-container text-error text-label-sm font-bold">Critical</span>
+</td>
+<td class="px-gutter py-md text-right">
+<button class="text-primary hover:underline font-label-md">Analyze</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="px-gutter py-md">
+<p class="font-bold text-on-surface">Tech Debt vs Velocity</p>
+<p class="text-label-sm text-secondary">Engineering Sprint Plan vs CEO Vision</p>
+</td>
+<td class="px-gutter py-md">
+<div class="flex -space-x-2">
+<div class="h-8 w-8 rounded-full border-2 border-white bg-surface-variant flex items-center justify-center"><span class="material-symbols-outlined text-[16px]">terminal</span></div>
+<div class="h-8 w-8 rounded-full border-2 border-white bg-surface-variant flex items-center justify-center"><span class="material-symbols-outlined text-[16px]">rocket_launch</span></div>
+</div>
+</td>
+<td class="px-gutter py-md">
+<div class="flex items-center gap-sm">
+<div class="flex-1 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[42%]"></div>
+</div>
+<span class="text-label-sm font-bold">42%</span>
+</div>
+</td>
+<td class="px-gutter py-md">
+<span class="px-sm py-1 rounded-full bg-surface-container-high text-secondary text-label-sm">Low Signal</span>
+</td>
+<td class="px-gutter py-md text-right">
+<button class="text-primary hover:underline font-label-md">Analyze</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Bottom Detail Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter mt-gutter">
+<div class="p-lg bg-surface-container-low rounded-xl border border-outline-variant flex items-start gap-lg">
+<div class="h-12 w-12 bg-primary rounded-xl flex items-center justify-center text-white shrink-0">
+<span class="material-symbols-outlined">auto_graph</span>
+</div>
+<div>
+<h5 class="font-headline-md text-on-surface mb-xs">Contradiction Trends</h5>
+<p class="text-body-md text-on-surface-variant mb-md">Strategic misalignment has increased by 14% this month as Q4 planning accelerates across departments.</p>
+<div class="flex gap-md">
+<div class="text-center">
+<p class="text-label-sm text-secondary">Detected</p>
+<p class="font-bold text-primary">124</p>
+</div>
+<div class="text-center">
+<p class="text-label-sm text-secondary">Resolved</p>
+<p class="font-bold text-tertiary">98</p>
+</div>
+<div class="text-center">
+<p class="text-label-sm text-secondary">Impact</p>
+<p class="font-bold text-error">High</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative rounded-xl overflow-hidden group border border-outline-variant">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent z-0"></div>
+
+<div class="relative z-10 p-lg h-full flex flex-col justify-center">
+<h5 class="font-headline-md text-on-surface mb-xs">AI Workspace Integration</h5>
+<p class="text-body-md text-on-surface-variant mb-md">Our neural engine constantly scans all 24,000+ internal documents to ensure your strategy stays unified.</p>
+<button class="w-fit px-md py-2 bg-on-surface text-white rounded font-label-md hover:bg-black transition-colors">Configure Neural Scan</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Interactive Elements Script -->
+<script>
+    document.querySelectorAll('tr').forEach(row => {
+      row.addEventListener('click', () => {
+        // Simple micro-interaction for row selection
+        const isSelected = row.classList.contains('bg-surface-container-high');
+        document.querySelectorAll('tr').forEach(r => r.classList.remove('bg-surface-container-high'));
+        if (!isSelected) {
+          row.classList.add('bg-surface-container-high');
+        }
+      });
+    });
+
+    // Custom console log to acknowledge component mounting
+    console.log("Contradiction Detector Shell Mounted.");
+  </script>
+</body></html>

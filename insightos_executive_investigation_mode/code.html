@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InsightOS | Executive Investigation Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#87c695",
+                        "border": "#E7E5E4",
+                        "text-secondary": "#78716C",
+                        "inverse-primary": "#96d5a3",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e9e1dd",
+                        "surface-bright": "#fff8f5",
+                        "primary": "#003b1b",
+                        "on-secondary-fixed-variant": "#005137",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#ffd9dc",
+                        "inverse-on-surface": "#f7efeb",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#591d28",
+                        "on-secondary-fixed": "#002114",
+                        "surface-dim": "#e0d8d5",
+                        "on-tertiary-container": "#f79eaa",
+                        "inverse-surface": "#33302d",
+                        "warning": "#CA8A04",
+                        "secondary-fixed-dim": "#68dba9",
+                        "on-surface-variant": "#404941",
+                        "on-tertiary-fixed": "#3c0613",
+                        "tertiary-container": "#75333e",
+                        "surface-container": "#f4ece8",
+                        "danger": "#B91C1C",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#96d5a3",
+                        "on-secondary-container": "#00714e",
+                        "on-primary-fixed": "#00210d",
+                        "outline": "#717970",
+                        "on-surface": "#1e1b19",
+                        "primary-container": "#14532d",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#faf2ee",
+                        "outline-variant": "#c0c9be",
+                        "secondary-container": "#82f5c1",
+                        "surface-tint": "#2e6a41",
+                        "surface": "#FFFFFF",
+                        "on-tertiary-fixed-variant": "#73323d",
+                        "secondary": "#006c4a",
+                        "secondary-fixed": "#85f8c4",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#12512c",
+                        "surface-container-high": "#eee7e3",
+                        "background": "#FCFCFA",
+                        "tertiary-fixed-dim": "#ffb2bb",
+                        "on-background": "#1e1b19",
+                        "primary-fixed": "#b1f2be",
+                        "surface-variant": "#e9e1dd",
+                        "success": "#15803D"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "margin-desktop": "32px",
+                        "max-width": "1440px",
+                        "margin-mobile": "16px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "data-tabular": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-md": ["Geist"],
+                        "headline-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "label-md": ["13px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "data-tabular": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Geist', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .6; transform: scale(1.1); }
+        }
+        .sidebar-item-active {
+            @apply flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold;
+        }
+        .sidebar-item-inactive {
+            @apply flex items-center gap-3 px-4 py-3 text-text-secondary hover:text-on-surface hover:bg-surface-container-low transition-colors duration-200;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased overflow-hidden">
+<!-- Sidebar Navigation Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-border bg-surface flex flex-col p-4 z-50">
+<div class="mb-8">
+<span class="text-headline-md font-headline-md font-bold text-primary">InsightOS</span>
+<p class="text-label-sm font-label-sm text-text-secondary tracking-widest uppercase">Enterprise Knowledge</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="sidebar-item-inactive" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="sidebar-item-inactive" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="text-label-md font-label-md">Company Brain</span>
+</a>
+<a class="sidebar-item-inactive" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="text-label-md font-label-md">Cross-Doc Intel</span>
+</a>
+<a class="sidebar-item-inactive" href="#">
+<span class="material-symbols-outlined">lightbulb</span>
+<span class="text-label-md font-label-md">Insights Center</span>
+</a>
+<a class="sidebar-item-inactive" href="#">
+<span class="material-symbols-outlined">rule</span>
+<span class="text-label-md font-label-md">Contradiction Detector</span>
+</a>
+<a class="sidebar-item-inactive" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+<span class="text-label-md font-label-md">Doc Hub</span>
+</a>
+<a class="sidebar-item-inactive" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="text-label-md font-label-md">Executive Advisor</span>
+</a>
+<a class="sidebar-item-active" href="#">
+<span class="material-symbols-outlined">travel_explore</span>
+<span class="text-label-md font-label-md">Investigation Mode</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-border flex items-center gap-3">
+<img alt="User profile" class="w-8 h-8 rounded-full bg-surface-container-high" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqjaG97TbIxkE_w6QXGiSX6j0nGTYJ0J3Y92Ild6-t_IY9iig-B6tB9mKUDECqU_qezsqCRblKqyYgBeWiyKUSj4KNy6XXFVVmn0hBgprkSueevocahlZCifM-be9AYn3tas42jxE6EarTPStV8g8ZhHKi11ymT0qCaCBdzbzxEzwzEiWwbuXoxMOvbeX_ub1XYDXWVSSwL1yHIT35C9YA_YQ3TsSXv0dQFMH5g3mTa3pXEZ_nbkSk9rHZsnl23bGRZiG2V4yoGcwD"/>
+<div class="flex flex-col overflow-hidden">
+<span class="text-label-md font-label-md truncate">Executive User</span>
+<span class="text-label-sm font-label-sm text-text-secondary">Enterprise Admin</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex flex-col h-screen">
+<!-- Top Navigation Cluster -->
+<header class="flex justify-between items-center w-full h-16 px-gutter border-b border-border bg-surface z-40">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer">arrow_back</span>
+<div class="flex flex-col">
+<span class="text-label-sm font-label-sm text-text-secondary">ACTIVE INVESTIGATION</span>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">Why is customer churn increasing?</h1>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container-low rounded-lg border border-border">
+<span class="w-2 h-2 rounded-full bg-success animate-pulse-subtle"></span>
+<span class="text-label-md font-label-md">AI Agent Thinking...</span>
+</div>
+<div class="flex items-center gap-3 border-l border-border pl-4">
+<span class="material-symbols-outlined text-text-secondary cursor-pointer hover:text-primary transition-colors">notifications</span>
+<span class="material-symbols-outlined text-text-secondary cursor-pointer hover:text-primary transition-colors">settings</span>
+<button class="bg-primary text-white px-4 py-1.5 rounded-lg text-label-md font-label-md hover:bg-opacity-90 transition-all active:scale-95">Workspace</button>
+</div>
+</div>
+</header>
+<!-- Layout Grid: 3 Columns -->
+<div class="flex-1 overflow-hidden grid grid-cols-12">
+<!-- 1. Investigation Status Panel (Sidebar Left) -->
+<section class="col-span-3 border-r border-border bg-surface-container-lowest p-6 flex flex-col gap-6">
+<h2 class="text-label-sm font-label-sm text-text-secondary uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">monitoring</span>
+                    AI Reasoning Steps
+                </h2>
+<ul class="space-y-6 relative">
+<!-- Progress Line -->
+<div class="absolute left-[9px] top-2 bottom-2 w-px bg-border"></div>
+<!-- Step 1: Complete -->
+<li class="flex gap-4 relative z-10">
+<div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[14px]">check</span>
+</div>
+<div>
+<p class="text-body-md font-body-md text-primary font-bold">Analyzing Customer Feedback Reports</p>
+<p class="text-label-sm font-label-sm text-text-secondary">42 documents processed</p>
+</div>
+</li>
+<!-- Step 2: Complete -->
+<li class="flex gap-4 relative z-10">
+<div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[14px]">check</span>
+</div>
+<div>
+<p class="text-body-md font-body-md text-primary font-bold">Analyzing Revenue Reports</p>
+<p class="text-label-sm font-label-sm text-text-secondary">Q2-Q3 comparison complete</p>
+</div>
+</li>
+<!-- Step 3: In Progress -->
+<li class="flex gap-4 relative z-10">
+<div class="w-5 h-5 rounded-full border-2 border-primary bg-white flex items-center justify-center animate-pulse-subtle">
+<div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
+</div>
+<div>
+<p class="text-body-md font-body-md font-bold text-on-surface">Analyzing Support Tickets</p>
+<div class="mt-2 w-full bg-surface-container-high h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[65%]" id="progress-bar"></div>
+</div>
+<p class="text-label-sm font-label-sm text-text-secondary mt-1">Processing ticket #8,941 of 12,000...</p>
+</div>
+</li>
+<!-- Step 4: Pending -->
+<li class="flex gap-4 relative z-10 opacity-50">
+<div class="w-5 h-5 rounded-full border-2 border-border bg-white flex items-center justify-center"></div>
+<div>
+<p class="text-body-md font-body-md">Analyzing Product Roadmaps</p>
+<p class="text-label-sm font-label-sm text-text-secondary">Queued</p>
+</div>
+</li>
+<!-- Step 5: Pending -->
+<li class="flex gap-4 relative z-10 opacity-50">
+<div class="w-5 h-5 rounded-full border-2 border-border bg-white flex items-center justify-center"></div>
+<div>
+<p class="text-body-md font-body-md">Analyzing Meeting Notes</p>
+<p class="text-label-sm font-label-sm text-text-secondary">Queued</p>
+</div>
+</li>
+</ul>
+<div class="mt-auto bg-surface border border-border p-4 rounded-xl">
+<p class="text-label-sm font-label-sm text-text-secondary mb-2">INTELLIGENCE LOAD</p>
+<div class="flex items-end gap-1 h-12">
+<div class="flex-1 bg-primary h-[40%] rounded-sm"></div>
+<div class="flex-1 bg-primary h-[60%] rounded-sm"></div>
+<div class="flex-1 bg-primary h-[90%] rounded-sm"></div>
+<div class="flex-1 bg-primary h-[75%] rounded-sm"></div>
+<div class="flex-1 bg-primary h-[95%] rounded-sm"></div>
+<div class="flex-1 bg-primary h-[85%] rounded-sm"></div>
+<div class="flex-1 bg-primary h-[60%] rounded-sm animate-pulse"></div>
+</div>
+</div>
+</section>
+<!-- 2. Main Analysis Area -->
+<section class="col-span-6 p-8 overflow-y-auto bg-background">
+<!-- Executive Briefing Banner -->
+<div class="bg-primary-container text-on-primary-container p-6 rounded-xl border border-primary/20 mb-8 shadow-sm">
+<h3 class="text-label-sm font-label-sm uppercase tracking-widest mb-2 opacity-80">Executive Briefing</h3>
+<p class="text-body-lg font-body-lg leading-relaxed text-white">
+                        Customer churn increased primarily due to <span class="font-bold border-b border-white/40">slower support response times</span> and <span class="font-bold border-b border-white/40">delayed delivery of requested features</span>. Revenue exposure is estimated at <span class="font-bold text-inverse-primary">$1.2M annually</span>. Immediate action is recommended.
+                    </p>
+</div>
+<!-- Root Cause Analysis -->
+<div class="space-y-6">
+<h2 class="text-headline-md font-headline-md text-primary">Root Cause Analysis</h2>
+<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="bg-surface p-5 rounded-xl border border-border flex flex-col">
+<span class="text-label-sm font-label-sm text-text-secondary mb-1">CONFIDENCE SCORE</span>
+<span class="text-headline-md font-headline-md text-success">94%</span>
+<div class="mt-2 w-full bg-surface-container-low h-1 rounded-full overflow-hidden">
+<div class="bg-success h-full w-[94%]"></div>
+</div>
+</div>
+<div class="bg-surface p-5 rounded-xl border border-border flex flex-col">
+<span class="text-label-sm font-label-sm text-text-secondary mb-1">BUSINESS IMPACT</span>
+<span class="text-headline-md font-headline-md text-danger">$1.2M <span class="text-body-md">ARR Exposure</span></span>
+<div class="mt-2 w-full bg-surface-container-low h-1 rounded-full overflow-hidden">
+<div class="bg-danger h-full w-[80%]"></div>
+</div>
+</div>
+</div>
+<div class="bg-surface border border-border rounded-xl divide-y divide-border">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">priority_high</span>
+<h4 class="text-body-lg font-body-lg font-bold text-primary">Primary Cause: Service Response Degradation</h4>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant ml-9">
+                                Support ticket response times for 'Tier 1' clients have increased by 38% since last quarter, directly correlating with a 15% drop in CSAT scores for churned accounts.
+                            </p>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-3 mb-3">
+<span class="material-symbols-outlined text-text-secondary">fast_forward</span>
+<h4 class="text-body-lg font-body-lg font-bold">Secondary Cause: Feature Delivery Delay</h4>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant ml-9">
+                                Project 'Aurora' (the most requested feature set) has seen a three-month slip. 40% of exit interviews cited "missing core capabilities" as a reason for cancellation.
+                            </p>
+</div>
+<div class="p-6">
+<h4 class="text-label-sm font-label-sm text-text-secondary uppercase mb-4 ml-9">Contributing Factors</h4>
+<div class="flex flex-wrap gap-2 ml-9">
+<div class="bg-surface-container-low border border-border px-3 py-1.5 rounded-lg flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-warning"></span>
+<span class="text-label-md font-label-md">Competitive price pressure</span>
+</div>
+<div class="bg-surface-container-low border border-border px-3 py-1.5 rounded-lg flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-warning"></span>
+<span class="text-label-md font-label-md">Documentation gaps</span>
+</div>
+<div class="bg-surface-container-low border border-border px-3 py-1.5 rounded-lg flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-text-secondary"></span>
+<span class="text-label-md font-label-md">Hiring freeze impact</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Evidence Drawer (Integrated Right) -->
+<section class="col-span-3 border-l border-border bg-surface p-6 flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<h2 class="text-label-sm font-label-sm text-text-secondary uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">inventory_2</span>
+                        Evidence Drawer
+                    </h2>
+<span class="text-label-sm font-label-sm text-primary font-bold cursor-pointer hover:underline">See All</span>
+</div>
+<!-- Evidence Sources -->
+<div class="space-y-4 overflow-y-auto flex-1">
+<div class="group bg-surface hover:bg-surface-container-low border border-border p-4 rounded-xl transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-primary">description</span>
+<span class="text-label-sm font-label-sm text-success bg-success/10 px-2 py-0.5 rounded">98% Conf.</span>
+</div>
+<p class="text-label-md font-label-md font-bold mb-1">Q3 Support Log Analysis</p>
+<p class="text-label-sm font-label-sm text-text-secondary line-clamp-2 italic">"...unprecedented volume in August led to backlog spikes..."</p>
+</div>
+<div class="group bg-surface hover:bg-surface-container-low border border-border p-4 rounded-xl transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-primary">map</span>
+<span class="text-label-sm font-label-sm text-warning bg-warning/10 px-2 py-0.5 rounded">85% Conf.</span>
+</div>
+<p class="text-label-md font-label-md font-bold mb-1">Product Roadmap v2.4</p>
+<p class="text-label-sm font-label-sm text-text-secondary line-clamp-2 italic">"Timeline adjustment for module A3 delayed until FY25..."</p>
+</div>
+<div class="group bg-surface hover:bg-surface-container-low border border-border p-4 rounded-xl transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-primary">analytics</span>
+<span class="text-label-sm font-label-sm text-success bg-success/10 px-2 py-0.5 rounded">92% Conf.</span>
+</div>
+<p class="text-label-md font-label-md font-bold mb-1">Customer Exit Surveys</p>
+<p class="text-label-sm font-label-sm text-text-secondary line-clamp-2 italic">"Switching to competitor X due to faster turnaround..."</p>
+</div>
+</div>
+<!-- Relationship Map Snippet -->
+<div class="mt-auto border-t border-border pt-6">
+<h3 class="text-label-sm font-label-sm text-text-secondary uppercase mb-4">Relationship Map</h3>
+<div class="relative w-full h-48 bg-surface-container-low rounded-xl overflow-hidden border border-border p-4">
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<!-- Visual placeholder for a relationship map -->
+<svg class="w-full h-full text-primary/20 opacity-40" viewbox="0 0 100 100">
+<path d="M20,20 L50,50 M50,50 L80,20 M50,50 L50,80 M20,80 L50,50" fill="none" stroke="currentColor" stroke-dasharray="2,2" stroke-width="1"></path>
+</svg>
+</div>
+<div class="flex flex-col gap-2 relative h-full">
+<div class="absolute top-2 left-2 bg-white px-2 py-1 border border-border rounded text-[10px] shadow-sm">Support Logs</div>
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary text-white px-2 py-1 rounded text-[10px] shadow-md z-10">CHURN RATE</div>
+<div class="absolute bottom-2 right-2 bg-white px-2 py-1 border border-border rounded text-[10px] shadow-sm">Roadmap Delay</div>
+<div class="absolute top-4 right-4 bg-white px-2 py-1 border border-border rounded text-[10px] shadow-sm">Revenue</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Action Floating Bar -->
+<footer class="h-14 border-t border-border bg-surface px-8 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-label-sm text-text-secondary italic">Last updated: Just now</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-primary hover:bg-surface-container-low px-4 py-1.5 rounded-lg text-label-md font-label-md transition-all">Download Report (PDF)</button>
+<button class="bg-primary text-white px-6 py-1.5 rounded-lg text-label-md font-label-md flex items-center gap-2 hover:bg-opacity-90 active:scale-95 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">share</span>
+                    Share Briefing
+                </button>
+</div>
+</footer>
+</main>
+<script>
+        // Micro-interaction: Progress bar simulation
+        let width = 65;
+        const bar = document.getElementById('progress-bar');
+        setInterval(() => {
+            if (width < 95) {
+                width += 0.5;
+                bar.style.width = width + '%';
+            }
+        }, 3000);
+
+        // Interaction for evidence cards
+        document.querySelectorAll('.group.bg-surface').forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('scale-[1.02]');
+                setTimeout(() => card.classList.remove('scale-[1.02]'), 200);
+            });
+        });
+    </script>
+</body></html>

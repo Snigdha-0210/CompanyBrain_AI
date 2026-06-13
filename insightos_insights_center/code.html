@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InsightOS — Insights Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;500;600;700;900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #faf8ff;
+            -webkit-font-smoothing: antialiased;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8ff;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary": "#ffffff",
+                      "primary": "#004ac6",
+                      "on-tertiary-fixed": "#001e2f",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface": "#131b2e",
+                      "secondary-fixed-dim": "#b9c7df",
+                      "outline-variant": "#c3c6d7",
+                      "inverse-primary": "#b4c5ff",
+                      "surface-bright": "#faf8ff",
+                      "tertiary-fixed-dim": "#89ceff",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#dae2fd",
+                      "on-secondary-container": "#57657a",
+                      "primary-container": "#2563eb",
+                      "on-secondary-fixed": "#0d1c2e",
+                      "on-tertiary-fixed-variant": "#004c6e",
+                      "error-container": "#ffdad6",
+                      "tertiary": "#005a82",
+                      "inverse-surface": "#283044",
+                      "inverse-on-surface": "#eef0ff",
+                      "on-primary": "#ffffff",
+                      "secondary": "#515f74",
+                      "background": "#faf8ff",
+                      "surface-container-highest": "#dae2fd",
+                      "on-tertiary": "#ffffff",
+                      "surface-tint": "#0053db",
+                      "surface": "#faf8ff",
+                      "primary-fixed": "#dbe1ff",
+                      "surface-container-low": "#f2f3ff",
+                      "surface-dim": "#d2d9f4",
+                      "on-surface-variant": "#434655",
+                      "secondary-fixed": "#d5e3fc",
+                      "on-secondary-fixed-variant": "#3a485b",
+                      "secondary-container": "#d5e3fc",
+                      "on-tertiary-container": "#e4f2ff",
+                      "tertiary-container": "#0074a6",
+                      "tertiary-fixed": "#c9e6ff",
+                      "outline": "#737686",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#eaedff",
+                      "error": "#ba1a1a",
+                      "on-primary-container": "#eeefff",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "on-primary-fixed": "#00174b",
+                      "on-background": "#131b2e",
+                      "surface-container-high": "#e2e7ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "max-width": "1440px",
+                      "xs": "0.25rem",
+                      "sm": "0.5rem",
+                      "md": "1rem",
+                      "gutter": "1.5rem",
+                      "xl": "2rem",
+                      "base": "4px",
+                      "margin": "2rem",
+                      "lg": "1.5rem"
+              },
+              "fontFamily": {
+                      "code": ["monospace"],
+                      "headline-lg": ["Geist"],
+                      "label-sm": ["Geist"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg-mobile": ["Geist"],
+                      "label-md": ["Geist"],
+                      "display": ["Geist"],
+                      "headline-md": ["Geist"]
+              },
+              "fontSize": {
+                      "code": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="flex min-h-screen overflow-hidden">
+<!-- Sidebar Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface dark:bg-surface-dim border-r border-outline-variant flex flex-col py-md z-50">
+<div class="px-gutter mb-xl">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Apex Dynamics</h1>
+<p class="font-body-md text-body-md text-secondary">Enterprise Strategy</p>
+</div>
+<nav class="flex-1 space-y-1 px-sm overflow-y-auto custom-scrollbar">
+<!-- Navigation Items Mapping -->
+<a class="flex items-center gap-3 px-md py-sm font-label-sm text-label-sm text-secondary hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-md py-sm font-label-sm text-label-sm text-secondary hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">psychology</span>
+                Company Brain
+            </a>
+<a class="flex items-center gap-3 px-md py-sm font-label-sm text-label-sm text-secondary hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">compare_arrows</span>
+                Cross-Doc Intel
+            </a>
+<!-- ACTIVE TAB: Insights Center -->
+<a class="flex items-center gap-3 px-md py-sm font-label-sm text-label-sm text-primary bg-secondary-container border-l-2 border-primary font-bold rounded-lg" href="#">
+<span class="material-symbols-outlined">insights</span>
+                Insights Center
+            </a>
+<a class="flex items-center gap-3 px-md py-sm font-label-sm text-label-sm text-secondary hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">rule</span>
+                Contradiction Detector
+            </a>
+<a class="flex items-center gap-3 px-md py-sm font-label-sm text-label-sm text-secondary hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+                Doc Hub
+            </a>
+<a class="flex items-center gap-3 px-md py-sm font-label-sm text-label-sm text-secondary hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+                Executive Advisor
+            </a>
+</nav>
+<div class="px-sm mt-auto pt-md border-t border-outline-variant space-y-1">
+<a class="flex items-center gap-3 px-md py-sm font-label-sm text-label-sm text-secondary hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+<a class="flex items-center gap-3 px-md py-sm font-label-sm text-label-sm text-secondary hover:bg-surface-container-low transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+                Support
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-[280px] flex-1 h-screen flex flex-col relative overflow-y-auto">
+<!-- Top Navigation Bar Shell -->
+<header class="sticky top-0 z-40 flex justify-between items-center h-14 px-gutter w-full bg-surface border-b border-outline-variant">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full h-9 pl-10 pr-4 bg-surface-container-low border border-outline-variant rounded-lg text-body-md focus:ring-2 focus:ring-primary focus:outline-none transition-all" placeholder="Search insights, risks, or strategy documentation..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg ml-gutter">
+<nav class="hidden md:flex gap-md">
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1" href="#">Overview</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Risk Map</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Forecasting</a>
+</nav>
+<div class="h-6 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-sm">
+<button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">bolt</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-full border border-outline-variant overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqGRk8QxgX2edBtAmZEp99mnKDmMu26R-cfPWcs7_vne2EBYdawv2Cbt7jbCgIQAQgj5VX9zeBhGWZmVuIbYP0s3mXWcOax0O82qTzwgmKKyZOZhQjBo0R-mzeKSCDcvoNOdTHYtBgAGOz2IxYM_TiX12T1sRI1WAYoQ-sdPcR5wNLxv2gmlhYvpeGfbSnRwSA9wP0m0etc2eKtIzVE4ZfruJvKhXMDQvh5uO_oORnVSCFZSghsMqxFyTWZLK7OPVXlyK_ma14UJgO"/>
+</button>
+</div>
+</div>
+</header>
+<!-- Insights Center Hero Content -->
+<section class="p-gutter">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Insights Center</h2>
+<p class="font-body-lg text-body-lg text-secondary max-w-2xl">Autonomous risk assessment and strategic opportunity identification across enterprise operations.</p>
+</div>
+<div class="flex gap-sm">
+<button class="flex items-center gap-2 px-md h-9 border border-outline-variant rounded text-label-md font-label-md text-on-surface hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+                        Filters
+                    </button>
+<button class="flex items-center gap-2 px-md h-9 bg-primary text-white rounded text-label-md font-label-md hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                        New Assessment
+                    </button>
+</div>
+</div>
+<!-- Bento Grid: Interactive High-Level Risk/Opportunity Cards -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-xl">
+<!-- Revenue Risks -->
+<div class="p-lg bg-surface border border-outline-variant rounded-xl flex flex-col gap-sm hover:border-primary transition-colors cursor-pointer group">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined p-2 bg-error-container text-error rounded-lg">trending_down</span>
+<span class="font-label-sm text-label-sm text-error px-2 py-0.5 bg-error-container rounded-full">-12% YoY</span>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface mt-sm">Revenue Risks</h3>
+<p class="font-display text-[28px] leading-none text-on-surface font-bold">14 Active</p>
+<p class="font-body-md text-body-md text-secondary mt-1">High exposure in Q4 expansion.</p>
+</div>
+<!-- Operational Risks -->
+<div class="p-lg bg-surface border border-outline-variant rounded-xl flex flex-col gap-sm hover:border-primary transition-colors cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined p-2 bg-secondary-container text-secondary rounded-lg">settings_suggest</span>
+<span class="font-label-sm text-label-sm text-secondary px-2 py-0.5 bg-secondary-container rounded-full">Stable</span>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface mt-sm">Operational Risks</h3>
+<p class="font-display text-[28px] leading-none text-on-surface font-bold">08 Active</p>
+<p class="font-body-md text-body-md text-secondary mt-1">Supply chain logistics alert.</p>
+</div>
+<!-- Project Delays -->
+<div class="p-lg bg-surface border border-outline-variant rounded-xl flex flex-col gap-sm hover:border-primary transition-colors cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined p-2 bg-warning-container bg-amber-100 text-amber-700 rounded-lg">timer</span>
+<span class="font-label-sm text-label-sm text-amber-700 px-2 py-0.5 bg-amber-100 rounded-full">4 At Risk</span>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface mt-sm">Project Delays</h3>
+<p class="font-display text-[28px] leading-none text-on-surface font-bold">03 Critical</p>
+<p class="font-body-md text-body-md text-secondary mt-1">Infrastructure milestones lagging.</p>
+</div>
+<!-- Strategic Opportunities -->
+<div class="p-lg bg-surface border border-outline-variant rounded-xl flex flex-col gap-sm hover:border-primary transition-colors cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined p-2 bg-tertiary-fixed text-tertiary rounded-lg">auto_awesome</span>
+<span class="font-label-sm text-label-sm text-tertiary px-2 py-0.5 bg-tertiary-fixed rounded-full">Growth</span>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface mt-sm">Strategic Opportunities</h3>
+<p class="font-display text-[28px] leading-none text-on-surface font-bold">22 Found</p>
+<p class="font-body-md text-body-md text-secondary mt-1">AI automation scaling potential.</p>
+</div>
+</div>
+<!-- Specific Insight Cards Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Card 1: Customer Concentration Risk -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden flex flex-col hover:shadow-md transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A sophisticated data visualization dashboard showing a complex network of nodes and connections in shades of corporate blue and soft white. The central cluster is dense, representing high concentration, while surrounding nodes are sparse, emphasizing strategic risk and exposure. The lighting is clean and clinical, suggesting a high-stakes enterprise environment with a minimal light-mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCosiCo60Haxo_fxzxt8v66DghiPuoOH75d8PjJMCM3s6RgJwRSpat4SeTCEyEQUjy5IDMXobjELLtjxH_sXQk-_8xGtN7DDDkCsRpdxKomz9KDd3VVZbLU4Vn9Sb1bOYnXCd_58FuKLYrJSr31BucJULGzgNxODvFCp0DdNGiAzQdXoXFpYuqfGoJSTZs1-ALsaIFYD1Z9_3EFajC7PygnlHXKDZAP7yntY_qdADiUzE5JyLgKqi0n6MF2QuoXDkw86mU0gbgj_981"/>
+<div class="absolute top-3 right-3">
+<span class="px-2 py-1 bg-error text-white font-label-sm text-label-sm rounded uppercase tracking-wider">Priority: High</span>
+</div>
+</div>
+<div class="p-lg flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-xs">Customer Concentration Risk</h4>
+<p class="font-body-md text-body-md text-secondary mb-lg">Top 3 clients account for 64% of quarterly recurring revenue. Loss of a single key account poses significant structural risk.</p>
+<div class="grid grid-cols-2 gap-md mb-lg border-y border-outline-variant py-md">
+<div>
+<p class="font-label-sm text-label-sm text-secondary uppercase">Impact Score</p>
+<p class="font-headline-md text-headline-md text-on-surface">8.4<span class="text-label-sm text-secondary">/10</span></p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-secondary uppercase">Confidence</p>
+<p class="font-headline-md text-headline-md text-on-surface">92%</p>
+</div>
+</div>
+<div class="mt-auto">
+<p class="font-label-sm text-label-sm text-secondary mb-xs">Suggested Action</p>
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md mb-md">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+                                Diversify Pipeline / Renew Key SLAs
+                            </div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary">Est. Impact: <strong class="text-on-surface">$2.4M Exposure</strong></span>
+<button class="text-primary font-label-md text-label-md hover:underline">Explore Plan</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Vendor Dependency Risk -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden flex flex-col hover:shadow-md transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A sterile industrial warehouse or shipping port with high-tech sensors and cargo containers. The color palette is dominated by muted silvers, soft blues, and sharp whites, creating a clean enterprise atmosphere. The lighting is even and cool, focusing on the precision and vulnerability of a modern global supply chain. The aesthetic is minimalist and data-driven." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmiZ_XVrM_KVJoePyVY0bVkYAP9u_9qw5-QAiolL39wv1S1EYmOQn1uCD5cYK4sNK1BZ_1vB4pfMIQxYLwccdazlHSoNFJ_gvAD6hDiFoJi28ZBuh0eUezhUpKYe8P8F9nJY370kVEI7m1hpVtmnp2YL03hE_MEgz5YRIPResVjRV3etpwUSzQkDVdfOp7awgpSDdjC8_Vk7pIjE5qFH8FOa_l6rlkeK2cyvOe2Myx02gB8Rxt7IhJurT47x4Rz9e07RBHCh0Mzh0-"/>
+<div class="absolute top-3 right-3">
+<span class="px-2 py-1 bg-amber-100 text-amber-700 border border-amber-200 font-label-sm text-label-sm rounded uppercase tracking-wider">Priority: Medium</span>
+</div>
+</div>
+<div class="p-lg flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-xs">Vendor Dependency Risk</h4>
+<p class="font-body-md text-body-md text-secondary mb-lg">Cloud infrastructure heavily reliant on single provider availability. Recent regional latency trends indicate potential SLA breaches.</p>
+<div class="grid grid-cols-2 gap-md mb-lg border-y border-outline-variant py-md">
+<div>
+<p class="font-label-sm text-label-sm text-secondary uppercase">Impact Score</p>
+<p class="font-headline-md text-headline-md text-on-surface">5.2<span class="text-label-sm text-secondary">/10</span></p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-secondary uppercase">Confidence</p>
+<p class="font-headline-md text-headline-md text-on-surface">78%</p>
+</div>
+</div>
+<div class="mt-auto">
+<p class="font-label-sm text-label-sm text-secondary mb-xs">Suggested Action</p>
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md mb-md">
+<span class="material-symbols-outlined text-[18px]">contract</span>
+                                Initiate Multi-Cloud RFP
+                            </div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary">Est. Impact: <strong class="text-on-surface">99.9% Uptime Goal</strong></span>
+<button class="text-primary font-label-md text-label-md hover:underline">Draft RFP</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3: Infrastructure Scaling Opportunity -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden flex flex-col hover:shadow-md transition-shadow">
+<div class="h-40 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="An abstract visualization of a high-speed fiber optic network or neural pathways, glowing with vibrant primary blue light against a deep navy and white background. The lines are sleek and dynamic, representing growth, speed, and scaling opportunities. The environment is dark and futuristic, with bright accents that evoke high-performance enterprise technology and efficient infrastructure." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcRrqWWzjihc4YfWypqLLGTGMZN-MMaRkMnhhNqYKbJ3q-ntUb6kL5gr6X8OvXwMrGzStCN-XD95M_5Up_SyX0GfREXLMH1MAwvlVHo3Thkms4wKL9coIp-_IvX1P2fSgo_9tEd06d5jfMKa2A1fChy4JR2WPQj14lOCbDJshSCXi6PpcxBu-lFGXva63opnx1Vl4-y3EE-HSCUuNkyL2Al7iT2KkMWyIpPOSovC_HbStlM-Gd5_BBR9Y0T8jeHUeY5RRCjAu9o8jJ"/>
+<div class="absolute top-3 right-3">
+<span class="px-2 py-1 bg-tertiary text-white font-label-sm text-label-sm rounded uppercase tracking-wider">Priority: Low</span>
+</div>
+</div>
+<div class="p-lg flex-1 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-xs">Infrastructure Scaling Opportunity</h4>
+<p class="font-body-md text-body-md text-secondary mb-lg">Legacy database migration to edge computing could reduce operational latency by 40% and cut hosting costs significantly.</p>
+<div class="grid grid-cols-2 gap-md mb-lg border-y border-outline-variant py-md">
+<div>
+<p class="font-label-sm text-label-sm text-secondary uppercase">Impact Score</p>
+<p class="font-headline-md text-headline-md text-on-surface">4.1<span class="text-label-sm text-secondary">/10</span></p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-secondary uppercase">Confidence</p>
+<p class="font-headline-md text-headline-md text-on-surface">64%</p>
+</div>
+</div>
+<div class="mt-auto">
+<p class="font-label-sm text-label-sm text-secondary mb-xs">Suggested Action</p>
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md mb-md">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+                                Scale Phase 1 Pilot
+                            </div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary">Est. Impact: <strong class="text-on-surface">$120k Monthly Savings</strong></span>
+<button class="text-primary font-label-md text-label-md hover:underline">View Pilot</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Dynamic Priority List View (Alternative View/Filter Result) -->
+<section class="px-gutter pb-xl mt-lg">
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-lg py-md border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<h3 class="font-label-md text-label-md font-bold text-on-surface">All Strategic Insights</h3>
+<div class="flex gap-sm">
+<select class="bg-transparent border-none font-label-sm text-label-sm text-secondary focus:ring-0 cursor-pointer">
+<option>Sort by: Newest</option>
+<option>Sort by: Impact</option>
+<option>Sort by: Confidence</option>
+</select>
+</div>
+</div>
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-lowest border-b border-outline-variant">
+<tr>
+<th class="px-lg py-md font-label-sm text-label-sm text-secondary uppercase">Insight Target</th>
+<th class="px-lg py-md font-label-sm text-label-sm text-secondary uppercase">Category</th>
+<th class="px-lg py-md font-label-sm text-label-sm text-secondary uppercase">Status</th>
+<th class="px-lg py-md font-label-sm text-label-sm text-secondary uppercase">Priority</th>
+<th class="px-lg py-md font-label-sm text-label-sm text-secondary uppercase">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">analytics</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-bold">Churn Prediction Spike</p>
+<p class="font-body-md text-body-md text-secondary">Enterprise Segment Delta</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md font-body-md text-body-md text-secondary">Revenue Risk</td>
+<td class="px-lg py-md">
+<span class="flex items-center gap-1.5 text-error font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+                                    Action Required
+                                </span>
+</td>
+<td class="px-lg py-md">
+<span class="px-2 py-0.5 bg-error-container text-error rounded text-label-sm font-label-sm">High</span>
+</td>
+<td class="px-lg py-md">
+<button class="p-2 rounded hover:bg-surface-container-high transition-colors text-secondary group-hover:text-primary">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">public</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-bold">LATAM Expansion Efficiency</p>
+<p class="font-body-md text-body-md text-secondary">Operational Opportunity</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md font-body-md text-body-md text-secondary">Strategic Opp.</td>
+<td class="px-lg py-md">
+<span class="flex items-center gap-1.5 text-secondary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                    Analyzing
+                                </span>
+</td>
+<td class="px-lg py-md">
+<span class="px-2 py-0.5 bg-secondary-container text-secondary rounded text-label-sm font-label-sm">Medium</span>
+</td>
+<td class="px-lg py-md">
+<button class="p-2 rounded hover:bg-surface-container-high transition-colors text-secondary group-hover:text-primary">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">shield_person</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-bold">Compliance Drift: GDPR v2</p>
+<p class="font-body-md text-body-md text-secondary">Legal/Operational Risk</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md font-body-md text-body-md text-secondary">Regulatory</td>
+<td class="px-lg py-md">
+<span class="flex items-center gap-1.5 text-tertiary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                                    Scheduled
+                                </span>
+</td>
+<td class="px-lg py-md">
+<span class="px-2 py-0.5 bg-tertiary-fixed text-tertiary rounded text-label-sm font-label-sm">Low</span>
+</td>
+<td class="px-lg py-md">
+<button class="p-2 rounded hover:bg-surface-container-high transition-colors text-secondary group-hover:text-primary">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<!-- Floating AI Assistant Button (Contextual) -->
+<button class="fixed bottom-gutter right-gutter w-14 h-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform group z-50">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="absolute right-full mr-4 bg-inverse-surface text-inverse-on-surface px-md py-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none font-label-md text-label-md">
+            Analyze Risk Gaps
+        </span>
+</button>
+<script>
+        // Micro-interactions for the cards
+        document.querySelectorAll('.cursor-pointer').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+                card.style.transition = 'all 0.2s ease-out';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

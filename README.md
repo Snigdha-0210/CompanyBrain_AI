@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CompanyBrain_AI 🧠
+
+> **The AI Chief Operating Officer that turns scattered company documents into strategic intelligence.**
+
+![CompanyBrain_AI](public/logo.png)
+
+## Overview
+
+CompanyBrain_AI is an autonomous AI Executive advisor. It acts as an AI COO for your company, seamlessly connecting the dots between your contracts, financial reports, meeting notes, and strategy roadmaps to eliminate blind spots. 
+
+Instead of a standard "PDF chatbot", CompanyBrain_AI ingests entire folders of unstructured data to:
+- Generate actionable **Strategic Insights**
+- Calculate real-time **Business & Compliance Risk**
+- Provide multi-quarter **Executive Strategy Action Plans** based on internal data and external market research.
+
+## Features
+
+- **Document Ingestion:** Upload multiple PDFs, DOCXs, and TXTs simultaneously.
+- **RAG Architecture:** Lightning-fast vector embeddings for deep contextual understanding.
+- **Risk Analysis Dashboard:** Automatically detects delayed projects, compliance gaps, and financial exposures.
+- **Strategic Advisor:** Combines internal company knowledge with live external web searches to generate actionable business strategy.
+- **Zero Hallucination Protocol:** Strictly grounded responses based *only* on the provided documents.
+
+## Tech Stack
+
+- **Frontend:** Next.js 14, React, TailwindCSS, shadcn/ui
+- **Backend:** Next.js App Router (Serverless APIs)
+- **AI Models:** Llama 3.3 (70B) via Groq for ultra-fast inference
+- **Database:** Firebase Admin SDK (Firestore)
+- **Vector Store:** ChromaDB / Local MemoryVectorStore
+- **Market Research:** Tavily Search API
 
 ## Getting Started
 
-First, run the development server:
-
+### 1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Snigdha-0210/CompanyBrain_AI.git
+cd CompanyBrain_AI
 ```
 
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Environment Variables
+Rename `.env.example` to `.env.local` and add your API keys:
+```env
+# Backend AI Keys (DO NOT EXPOSE THESE PUBLICLY)
+GROQ_API_KEY="your_groq_api_key_here"
+TAVILY_API_KEY="your_tavily_api_key_here"
+
+# Firebase Admin Keys for Backend Database
+FIREBASE_PROJECT_ID="your_firebase_project_id_here"
+FIREBASE_CLIENT_EMAIL="your_firebase_service_account_email_here"
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour_Hashed_Private_Key_Here\n-----END PRIVATE KEY-----\n"
+
+# NEXT_PUBLIC keys (Safe for frontend)
+NEXT_PUBLIC_FIREBASE_API_KEY="your_public_firebase_api_key"
+```
+
+### 4. Run the Development Server
+```bash
+npm run dev
+```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+Distributed under the MIT License. See `LICENSE` for more information.

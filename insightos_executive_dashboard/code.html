@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Apex Dynamics - Executive Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+        }
+        .gauge-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+        .gauge-ring {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary": "#ffffff",
+                      "primary": "#004ac6",
+                      "on-tertiary-fixed": "#001e2f",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface": "#131b2e",
+                      "secondary-fixed-dim": "#b9c7df",
+                      "outline-variant": "#c3c6d7",
+                      "inverse-primary": "#b4c5ff",
+                      "surface-bright": "#faf8ff",
+                      "tertiary-fixed-dim": "#89ceff",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#dae2fd",
+                      "on-secondary-container": "#57657a",
+                      "primary-container": "#2563eb",
+                      "on-secondary-fixed": "#0d1c2e",
+                      "on-tertiary-fixed-variant": "#004c6e",
+                      "error-container": "#ffdad6",
+                      "tertiary": "#005a82",
+                      "inverse-surface": "#283044",
+                      "inverse-on-surface": "#eef0ff",
+                      "on-primary": "#ffffff",
+                      "secondary": "#515f74",
+                      "background": "#faf8ff",
+                      "surface-container-highest": "#dae2fd",
+                      "on-tertiary": "#ffffff",
+                      "surface-tint": "#0053db",
+                      "surface": "#faf8ff",
+                      "primary-fixed": "#dbe1ff",
+                      "surface-container-low": "#f2f3ff",
+                      "surface-dim": "#d2d9f4",
+                      "on-surface-variant": "#434655",
+                      "secondary-fixed": "#d5e3fc",
+                      "on-secondary-fixed-variant": "#3a485b",
+                      "secondary-container": "#d5e3fc",
+                      "on-tertiary-container": "#e4f2ff",
+                      "tertiary-container": "#0074a6",
+                      "tertiary-fixed": "#c9e6ff",
+                      "outline": "#737686",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#eaedff",
+                      "error": "#ba1a1a",
+                      "on-primary-container": "#eeefff",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "on-primary-fixed": "#00174b",
+                      "on-background": "#131b2e",
+                      "surface-container-high": "#e2e7ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "max-width": "1440px",
+                      "xs": "0.25rem",
+                      "sm": "0.5rem",
+                      "md": "1rem",
+                      "gutter": "1.5rem",
+                      "xl": "2rem",
+                      "base": "4px",
+                      "margin": "2rem",
+                      "lg": "1.5rem"
+              },
+              "fontFamily": {
+                      "code": ["monospace"],
+                      "headline-lg": ["Geist"],
+                      "label-sm": ["Geist"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg-mobile": ["Geist"],
+                      "label-md": ["Geist"],
+                      "display": ["Geist"],
+                      "headline-md": ["Geist"]
+              },
+              "fontSize": {
+                      "code": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- SIDE NAVIGATION BAR -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-surface border-r border-outline-variant flex flex-col py-md z-50">
+<div class="px-gutter mb-xl">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Apex Dynamics</h1>
+<p class="text-secondary font-label-sm">Enterprise Strategy</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active: Dashboard -->
+<a class="flex items-center gap-3 px-gutter py-3 text-primary bg-secondary-container border-l-2 border-primary font-bold transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-gutter py-3 text-secondary hover:bg-surface-container-low transition-colors transition-all duration-200" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-body-md">Company Brain</span>
+</a>
+<a class="flex items-center gap-3 px-gutter py-3 text-secondary hover:bg-surface-container-low transition-colors transition-all duration-200" href="#">
+<span class="material-symbols-outlined">compare_arrows</span>
+<span class="font-body-md">Cross-Doc Intel</span>
+</a>
+<a class="flex items-center gap-3 px-gutter py-3 text-secondary hover:bg-surface-container-low transition-colors transition-all duration-200" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-body-md">Insights Center</span>
+</a>
+<a class="flex items-center gap-3 px-gutter py-3 text-secondary hover:bg-surface-container-low transition-colors transition-all duration-200" href="#">
+<span class="material-symbols-outlined">rule</span>
+<span class="font-body-md">Contradiction Detector</span>
+</a>
+<a class="flex items-center gap-3 px-gutter py-3 text-secondary hover:bg-surface-container-low transition-colors transition-all duration-200" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+<span class="font-body-md">Doc Hub</span>
+</a>
+<a class="flex items-center gap-3 px-gutter py-3 text-secondary hover:bg-surface-container-low transition-colors transition-all duration-200" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-body-md">Executive Advisor</span>
+</a>
+</nav>
+<div class="mt-auto px-gutter py-md border-t border-outline-variant space-y-1">
+<a class="flex items-center gap-3 py-2 text-secondary hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md">Settings</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-secondary hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-label-md">Support</span>
+</a>
+<div class="flex items-center gap-3 mt-4 pt-4 border-t border-outline-variant">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xs">AD</div>
+<div>
+<p class="font-label-md leading-none">Sarah Jenkins</p>
+<p class="text-xs text-secondary">Chief Strategy Officer</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TOP NAVIGATION BAR -->
+<header class="fixed top-0 left-[280px] right-0 h-14 bg-surface border-b border-outline-variant flex justify-between items-center px-gutter z-40">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-1.5 focus:ring-2 focus:ring-primary text-body-md" placeholder="Search strategy docs, insights, or risks..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-gutter">
+<button class="relative text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">bolt</span>
+</button>
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md font-black text-on-surface">InsightOS</span>
+<span class="material-symbols-outlined text-primary">account_circle</span>
+</div>
+</div>
+</header>
+<!-- MAIN CONTENT AREA -->
+<main class="ml-[280px] mt-14 p-gutter min-h-screen">
+<div class="max-w-max-width mx-auto">
+<!-- Welcome Header -->
+<div class="flex justify-between items-end mb-xl">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Good Morning, Sarah</h2>
+<p class="text-secondary body-md">Here is your strategic overview for <span class="font-semibold text-on-surface">October 24, 2024</span>.</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-white border border-outline-variant rounded-lg font-label-md hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">download</span> Export Report
+                    </button>
+<button class="px-4 py-2 bg-primary text-white rounded-lg font-label-md hover:bg-primary-container transition-colors shadow-sm">
+                        Refresh Intel
+                    </button>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-12 gap-lg">
+<!-- KPI CARDS -->
+<div class="col-span-12 grid grid-cols-1 md:grid-cols-4 gap-lg">
+<!-- Card 1 -->
+<div class="bg-white border border-outline-variant p-gutter rounded-xl hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-primary bg-primary-fixed p-2 rounded-lg">description</span>
+<span class="text-xs font-bold text-success flex items-center text-emerald-600"><span class="material-symbols-outlined text-sm">trending_up</span> +12</span>
+</div>
+<h4 class="text-secondary font-label-sm mb-1 uppercase tracking-wider">Documents Indexed</h4>
+<p class="text-headline-md font-bold text-on-surface">523</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-white border border-outline-variant p-gutter rounded-xl hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-tertiary bg-tertiary-fixed p-2 rounded-lg">assignment_turned_in</span>
+<span class="text-xs font-bold text-secondary">Active</span>
+</div>
+<h4 class="text-secondary font-label-sm mb-1 uppercase tracking-wider">Active Projects</h4>
+<p class="text-headline-md font-bold text-on-surface">12</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-white border border-outline-variant p-gutter rounded-xl hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-error bg-error-container p-2 rounded-lg">warning</span>
+<span class="text-xs font-bold text-error">+2 New</span>
+</div>
+<h4 class="text-secondary font-label-sm mb-1 uppercase tracking-wider">High-Risk Issues</h4>
+<p class="text-headline-md font-bold text-on-surface">5</p>
+</div>
+<!-- Card 4 -->
+<div class="bg-white border border-outline-variant p-gutter rounded-xl hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="material-symbols-outlined text-primary bg-primary-fixed p-2 rounded-lg">monetization_on</span>
+<span class="text-xs font-bold text-emerald-600 flex items-center"><span class="material-symbols-outlined text-sm">auto_awesome</span>AI Found</span>
+</div>
+<h4 class="text-secondary font-label-sm mb-1 uppercase tracking-wider">Revenue Opportunities</h4>
+<p class="text-headline-md font-bold text-on-surface">$2.4M</p>
+</div>
+</div>
+<!-- LEFT COLUMN: Health Score & Risk Map -->
+<div class="col-span-12 lg:col-span-4 space-y-lg">
+<!-- Health Score -->
+<div class="bg-white border border-outline-variant p-gutter rounded-xl flex flex-col items-center justify-center text-center">
+<h3 class="font-label-md mb-6 self-start">Company Health Score</h3>
+<div class="gauge-container mb-4">
+<svg class="w-full h-full" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="#eaedff" stroke-width="10"></circle>
+<circle class="gauge-ring" cx="50" cy="50" fill="none" r="45" stroke="#004ac6" stroke-dasharray="282.7" stroke-dashoffset="36.7" stroke-linecap="round" stroke-width="10"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-headline-lg font-black text-on-surface">87</span>
+<span class="text-xs text-secondary">/ 100</span>
+</div>
+</div>
+<p class="text-body-md text-emerald-600 font-semibold mb-2">Steady Growth (Tier A)</p>
+<p class="text-sm text-secondary">A 4.2% increase from last quarter's strategy audit.</p>
+</div>
+<!-- Risk Heat Map -->
+<div class="bg-white border border-outline-variant p-gutter rounded-xl">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-label-md">Risk Heat Map</h3>
+<span class="text-xs text-secondary">Severity vs Likelihood</span>
+</div>
+<div class="grid grid-cols-3 grid-rows-3 gap-1 aspect-square">
+<div class="bg-red-50 rounded-sm flex items-center justify-center relative overflow-hidden group">
+<span class="absolute inset-0 bg-red-500 opacity-20"></span>
+</div>
+<div class="bg-red-100 rounded-sm flex items-center justify-center relative overflow-hidden group">
+<span class="absolute inset-0 bg-red-600 opacity-40"></span>
+<div class="w-2.5 h-2.5 bg-red-600 rounded-full animate-pulse z-10"></div>
+</div>
+<div class="bg-red-200 rounded-sm flex items-center justify-center relative overflow-hidden group">
+<span class="absolute inset-0 bg-red-700 opacity-60"></span>
+<div class="w-2.5 h-2.5 bg-red-800 rounded-full z-10"></div>
+</div>
+<div class="bg-orange-50 rounded-sm"></div>
+<div class="bg-orange-100 rounded-sm flex items-center justify-center">
+<div class="w-2.5 h-2.5 bg-orange-500 rounded-full"></div>
+</div>
+<div class="bg-red-100 rounded-sm"></div>
+<div class="bg-emerald-50 rounded-sm"></div>
+<div class="bg-emerald-100 rounded-sm"></div>
+<div class="bg-orange-50 rounded-sm flex items-center justify-center">
+<div class="w-2.5 h-2.5 bg-orange-400 rounded-full"></div>
+</div>
+</div>
+<div class="mt-4 flex justify-between text-[10px] text-outline font-bold uppercase tracking-tighter">
+<span>Low Prob</span>
+<span>High Prob</span>
+</div>
+</div>
+</div>
+<!-- MIDDLE COLUMN: Strategic Summary -->
+<div class="col-span-12 lg:col-span-5 space-y-lg">
+<!-- Strategic Business Summary Card -->
+<div class="bg-white border border-outline-variant p-gutter rounded-xl relative overflow-hidden h-full">
+<div class="absolute top-0 right-0 p-4">
+<span class="bg-primary-container/10 text-primary px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">auto_awesome</span> AI INSIGHT
+                            </span>
+</div>
+<h3 class="font-label-md mb-4">Strategic Business Summary</h3>
+<div class="space-y-4">
+<p class="text-body-md text-on-surface leading-relaxed">
+                                Our data intelligence indicates a concerning trend in <span class="font-semibold text-error">customer retention (-8%)</span> within the Enterprise sector over the last 60 days. This shift appears linked to the recent Project Orion delays.
+                            </p>
+<div class="p-4 bg-surface-container-low rounded-lg border-l-4 border-primary">
+<h5 class="text-xs font-bold uppercase text-secondary mb-1">Key Insight: Revenue Concentration</h5>
+<p class="text-sm">Revenue dependency on <span class="font-bold">Alpha Corp</span> has reached <span class="text-error font-bold">42%</span>, exceeding the safety threshold of 25% defined in the annual governance policy.</p>
+</div>
+<div class="p-4 bg-surface-container-low rounded-lg border-l-4 border-tertiary">
+<h5 class="text-xs font-bold uppercase text-secondary mb-1">Vendor Intelligence</h5>
+<p class="text-sm">Project Orion is facing critical <span class="font-bold">vendor risks</span>. Financial instability detected in primary logistics partner (Sector-G) may result in a 3-week delay.</p>
+</div>
+<div class="pt-2">
+<img class="w-full h-32 object-cover rounded-lg" data-alt="A detailed, modern financial data visualization chart on a high-resolution screen. The chart shows a multi-line graph tracking revenue concentration trends against safety thresholds, using a sophisticated color palette of enterprise blues, vibrant warning reds, and clean whites. The setting is a professional, high-stakes corporate environment with soft ambient lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQoNXp97UZlWKqmjXzsF6vBIaSgffT3q-LoMdUkywOXWl8P-B31l5OI1_hi1-J75QtihBephuRXCUnBJZraSdUcxvhVywDtBkEbcAf_LHENapnyR4zb0XIaF6fYJjZZ2QAm_OS9zQCkI41zfwxHrTqL0x5cTTlPpioSc0LRohhQ-uMdeFy0fDqVqKcotJOosT5IYFbk-6KqULs4rrPMUcKq7HKq3F4Hy4PAshIlzUQ-zhTBd3GJis02mUM8PFVvXxKr6CLU39nRBTa"/>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Recommendations & Activity -->
+<div class="col-span-12 lg:col-span-3 space-y-lg">
+<!-- Priority Recommendations -->
+<div class="bg-inverse-surface text-inverse-on-surface p-gutter rounded-xl">
+<h3 class="font-label-md mb-4 text-white">Priority Recommendations</h3>
+<div class="space-y-3">
+<div class="group cursor-pointer hover:bg-white/5 p-2 rounded transition-colors border-b border-white/10 pb-3">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-2 h-2 bg-error rounded-full"></span>
+<h4 class="text-sm font-bold">Focus on Retention</h4>
+</div>
+<p class="text-xs text-inverse-on-surface/70">Execute tiered loyalty program for accounts with &lt;50% engagement.</p>
+</div>
+<div class="group cursor-pointer hover:bg-white/5 p-2 rounded transition-colors border-b border-white/10 pb-3">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-2 h-2 bg-orange-400 rounded-full"></span>
+<h4 class="text-sm font-bold">Diversify Suppliers</h4>
+</div>
+<p class="text-xs text-inverse-on-surface/70">Initiate RFP for backup logistics providers to mitigate Orion risk.</p>
+</div>
+<div class="group cursor-pointer hover:bg-white/5 p-2 rounded transition-colors">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+<h4 class="text-sm font-bold">Consolidate Intel</h4>
+</div>
+<p class="text-xs text-inverse-on-surface/70">Finalize the Q4 Strategy cross-pollination with the EMEA sales team.</p>
+</div>
+</div>
+</div>
+<!-- Recent Intelligence Activity Feed -->
+<div class="bg-white border border-outline-variant p-gutter rounded-xl">
+<h3 class="font-label-md mb-4">Intelligence Activity</h3>
+<div class="space-y-5">
+<div class="flex gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm text-primary">analytics</span>
+</div>
+<div>
+<p class="text-sm font-semibold">Contract analysis completed</p>
+<p class="text-[11px] text-secondary">32 minutes ago • Project Orion</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="w-8 h-8 rounded-full bg-error-container flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm text-error">money_off</span>
+</div>
+<div>
+<p class="text-sm font-semibold">Budget inconsistency detected</p>
+<p class="text-[11px] text-secondary">2 hours ago • HR Ops</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-container flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm text-on-tertiary-container">history_edu</span>
+</div>
+<div>
+<p class="text-sm font-semibold">New market intel indexed</p>
+<p class="text-[11px] text-secondary">Yesterday • Competitor X</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 text-xs font-bold text-primary border border-primary/20 rounded hover:bg-primary-container/5 transition-colors">
+                            View Full Audit Log
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Interactions Layer -->
+<script>
+        // Simple gauge animation entry
+        document.addEventListener('DOMContentLoaded', () => {
+            const gauge = document.querySelector('.gauge-ring');
+            if (gauge) {
+                gauge.style.transition = 'stroke-dashoffset 1.5s ease-out';
+                setTimeout(() => {
+                    gauge.style.strokeDashoffset = '36.7'; // Matches the 87/100 calc
+                }, 100);
+            }
+        });
+    </script>
+</body></html>

@@ -54,5 +54,7 @@ Each recommendation object must have:
 - "confidenceLevel": "High" | "Medium"
 - "businessImpact": string
 - "supportingEvidence": string (cite both internal data and external market trends)
+- "chartTitle": string (Title for a supporting graph, e.g. "Projected Revenue Growth")
+- "chartData": array of objects { "label": string (e.g. "Q1", "2024", "Month 1"), "value": number } (Provide 3 to 5 realistic data points to visualize the impact)
 
 User Question: {question}`;

@@ -4,14 +4,16 @@ import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Target, Zap, ArrowRight, BrainCircuit, CheckCircle2, TrendingUp } from 'lucide-react'
+import { Target, Zap, ArrowRight, BrainCircuit, CheckCircle2, TrendingUp, BarChart3 } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 
 export default function StrategyPage() {
   const [question, setQuestion] = useState('What should leadership focus on next quarter?')
   const [recommendations, setRecommendations] = useState<any[]>([])
+  const [expandedId, setExpandedId] = useState<string | null>(null)
 
   const strategyMutation = useMutation({
     mutationFn: async (q: string) => {
@@ -113,7 +115,7 @@ export default function StrategyPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="border-l-4 border-l-blue-600 shadow-sm hover:shadow-md transition-all">
+                <Card className="border-l-4 border-l-blue-600 shadow-sm hover:shadow-md transition-all overflow-hidden">
                   <CardHeader className="pb-2">
                     <div className="flex justify-between items-start gap-4">
                       <CardTitle className="text-xl leading-tight">{rec.recommendation}</CardTitle>
@@ -138,11 +140,48 @@ export default function StrategyPage() {
                       <p className="text-sm text-muted-foreground">{rec.supportingEvidence}</p>
                     </div>
                   </CardContent>
-                  <CardFooter className="bg-muted/20 border-t justify-end py-3">
-                    <Button variant="ghost" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/30">
-                      View Detailed Analysis
-                      <ArrowRight className="ml-2 h-4 w-4" />
+                  <CardFooter className="bg-muted/20 border-t flex-col items-stretch py-0">
+                    <Button 
+                      variant="ghost" 
+                      className="w-full text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-none py-4"
+                      onClick={() => setExpandedId(expandedId === rec.id ? null : rec.id)}
+                    >
+                      {expandedId === rec.id ? 'Hide Detailed Analysis' : 'View Detailed Analysis'}
+                      <ArrowRight className={`ml-2 h-4 w-4 transition-transform ${expandedId === rec.id ? 'rotate-90' : ''}`} />
                     </Button>
+                    
+                    {expandedId === rec.id && rec.chartData && rec.chartData.length > 0 && (
+                      <motion.div 
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        className="w-full p-6 border-t bg-white dark:bg-slate-950"
+                      >
+                        <h4 className="text-sm font-semibold mb-6 flex items-center gap-2">
+                          <BarChart3 className="h-4 w-4 text-blue-600" />
+                          {rec.chartTitle || "Supporting Data"}
+                        </h4>
+                        <div className="h-[250px] w-full">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <AreaChart data={rec.chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                              <defs>
+                                <linearGradient id={`colorValue${rec.id}`} x1="0" y1="0" x2="0" y2="1">
+                                  <stop offset="5%" stopColor="#2563eb" stopOpacity={0.3}/>
+                                  <stop offset="95%" stopColor="#2563eb" stopOpacity={0}/>
+                                </linearGradient>
+                              </defs>
+                              <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fontSize: 12 }} dy={10} />
+                              <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12 }} />
+                              <CartesianGrid vertical={false} strokeDasharray="3 3" opacity={0.5} />
+                              <Tooltip 
+                                contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} 
+                                formatter={(value: any) => [\`\${value}\`, "Value"]}
+                              />
+                              <Area type="monotone" dataKey="value" stroke="#2563eb" strokeWidth={3} fillOpacity={1} fill={`url(#colorValue${rec.id})`} />
+                            </AreaChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </motion.div>
+                    )}
                   </CardFooter>
                 </Card>
               </motion.div>

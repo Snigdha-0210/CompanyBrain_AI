@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ 
       success: true, 
       documentId,
-      message: `Successfully processed ${result.totalChunks} chunks`
+      message: `Successfully processed ${result.chunks} chunks`
     })
   } catch (error: any) {
     console.error('Upload error:', error)

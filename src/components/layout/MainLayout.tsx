@@ -13,9 +13,8 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-muted/20 flex flex-col">
       <Sidebar />
       <TopBar />
-      <RightPanel />
       <main className={cn(
-        "transition-all duration-300 pt-16 min-h-screen xl:pr-80",
+        "transition-all duration-300 pt-16 min-h-screen",
         sidebarOpen ? "pl-64" : "pl-20"
       )}>
         <div className="p-4 md:p-8 max-w-6xl mx-auto w-full">

@@ -10,6 +10,8 @@
 
 📊 **Pitch Deck / Presentation:** [View Google Drive Presentation](https://drive.google.com/file/d/15r1msxNqHFDO2XbqGRJwD5c3Zq-B9ydv/view?usp=sharing)
 
+🎥 **Video Demo:** [Watch on YouTube](https://youtu.be/96SpqFCHeiU)
+
 CompanyBrain_AI is an autonomous AI Executive advisor. It acts as an AI COO for your company, seamlessly connecting the dots between your contracts, financial reports, meeting notes, and strategy roadmaps to eliminate blind spots. 
 
 Instead of a standard "PDF chatbot", CompanyBrain_AI ingests entire folders of unstructured data to:

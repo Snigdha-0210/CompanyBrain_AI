@@ -11,6 +11,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { useStore } from '@/lib/store'
 import { Checkbox } from '@/components/ui/checkbox'
+import { useRouter } from 'next/navigation'
 
 interface Document {
   id: string
@@ -21,6 +22,7 @@ interface Document {
 }
 
 export default function DocumentsPage() {
+  const router = useRouter()
   const [isDragging, setIsDragging] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
 
@@ -100,6 +102,12 @@ export default function DocumentsPage() {
     } catch (e) {
       toast.error('Failed to delete document')
     }
+  }
+
+  const handleAnalyze = (docName: string) => {
+    deselectAllDocuments()
+    toggleDocument(docName)
+    router.push('/insights')
   }
 
   return (
@@ -200,10 +208,7 @@ export default function DocumentsPage() {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
-                        <Button variant="ghost" size="icon" title="View">
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="icon" title="Analyze" onClick={() => toast.success('Analysis started')}>
+                        <Button variant="ghost" size="icon" title="Analyze this document" onClick={() => handleAnalyze(doc.name)} className="text-blue-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950">
                           <BrainCircuit className="h-4 w-4" />
                         </Button>
                         <Button variant="ghost" size="icon" title="Delete" onClick={() => deleteDocument(doc.id)} className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950">
